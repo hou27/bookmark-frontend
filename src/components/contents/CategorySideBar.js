@@ -22,8 +22,8 @@ import {
   FormControlLabel,
 } from "@mui/material";
 //
-import Scrollbar from "../../Scrollbar";
-import ColorManyPicker from "../../ColorManyPicker";
+import Scrollbar from "../Scrollbar";
+import ColorManyPicker from "../ColorManyPicker";
 
 // ----------------------------------------------------------------------
 
@@ -64,17 +64,15 @@ export const FILTER_COLOR_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-ShopFilterSidebar.propTypes = {
+CategorySideBar.propTypes = {
   isOpenFilter: PropTypes.bool,
-  onResetFilter: PropTypes.func,
   onOpenFilter: PropTypes.func,
   onCloseFilter: PropTypes.func,
   formik: PropTypes.object,
 };
 
-export default function ShopFilterSidebar({
+export default function CategorySideBar({
   isOpenFilter,
-  onResetFilter,
   onOpenFilter,
   onCloseFilter,
   formik,
@@ -132,7 +130,7 @@ export default function ShopFilterSidebar({
                           <Checkbox
                             {...getFieldProps("gender")}
                             value={item}
-                            checked={values.gender.includes(item)}
+                            checked={values?.gender.includes(item)}
                           />
                         }
                         label={item}
@@ -165,7 +163,7 @@ export default function ShopFilterSidebar({
                     name="colors"
                     colors={FILTER_COLOR_OPTIONS}
                     onChange={handleChange}
-                    onChecked={(color) => values.colors.includes(color)}
+                    onChecked={(color) => values?.colors.includes(color)}
                     sx={{ maxWidth: 36 * 4 }}
                   />
                 </div>
@@ -212,7 +210,7 @@ export default function ShopFilterSidebar({
                             opacity: 0.48,
                             "& > *": { bgcolor: "transparent" },
                           },
-                          ...(values.rating.includes(item) && {
+                          ...(values?.rating.includes(item) && {
                             bgcolor: "background.neutral",
                           }),
                         }}
@@ -222,20 +220,6 @@ export default function ShopFilterSidebar({
                 </div>
               </Stack>
             </Scrollbar>
-
-            <Box sx={{ p: 3 }}>
-              <Button
-                fullWidth
-                size="large"
-                type="submit"
-                color="inherit"
-                variant="outlined"
-                onClick={onResetFilter}
-                startIcon={<Icon icon={roundClearAll} />}
-              >
-                Clear All
-              </Button>
-            </Box>
           </Drawer>
         </Form>
       </FormikProvider>

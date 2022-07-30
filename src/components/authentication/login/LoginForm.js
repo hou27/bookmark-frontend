@@ -1,3 +1,4 @@
+import React from "react";
 import * as Yup from "yup";
 import { useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
@@ -104,7 +105,7 @@ export default function LoginForm() {
         <Stack spacing={3}>
           <TextField
             fullWidth
-            autoComplete="username"
+            autoComplete="useremail"
             type="email"
             label="Email address"
             {...getFieldProps("email")}
