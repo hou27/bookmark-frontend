@@ -36,8 +36,8 @@ export default function AddContentForm() {
   const formik = useFormik({
     initialValues: {
       link: "",
-      title: "",
-      description: "",
+      // title: "",
+      // description: "",
       comment: "",
       categoryName: "",
     },
@@ -54,8 +54,8 @@ export default function AddContentForm() {
     await instance
       .post("api/contents/add", {
         link: values.link,
-        title: values?.title,
-        description: values?.description,
+        // title: values?.title,
+        // description: values?.description,
         comment: values?.comment,
         categoryName: values?.categoryName,
       })

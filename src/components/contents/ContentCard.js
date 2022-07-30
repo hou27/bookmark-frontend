@@ -88,7 +88,7 @@ ContentCard.propTypes = {
 };
 
 export default function ContentCard({ content, index }) {
-  const { link, title, comment, category } = content;
+  const { link, title, coverImg, comment, category } = content;
   let categoryName = "미분류";
   if (category?.name) {
     categoryName = category.name;
@@ -118,7 +118,7 @@ export default function ContentCard({ content, index }) {
         >
           {categoryName}
         </Label>
-        <ProductImgStyle alt={title} src={null} />
+        <ProductImgStyle alt={title} src={coverImg} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
