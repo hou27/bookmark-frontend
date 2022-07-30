@@ -20,7 +20,6 @@ import ContentList from "../components/contents/ContentList";
 // ----------------------------------------------------------------------
 
 export default function Contents() {
-  const [openFilter, setOpenFilter] = useState(false);
   const [list, setList] = React.useState([]);
 
   useEffect(() => {
@@ -37,34 +36,6 @@ export default function Contents() {
     }
     getMyList();
   }, []);
-
-  const formik = useFormik({
-    initialValues: {
-      gender: "",
-      category: "",
-      colors: "",
-      priceRange: "",
-      rating: "",
-    },
-    onSubmit: () => {
-      setOpenFilter(false);
-    },
-  });
-
-  const { resetForm, handleSubmit } = formik;
-
-  const handleOpenFilter = () => {
-    setOpenFilter(true);
-  };
-
-  const handleCloseFilter = () => {
-    setOpenFilter(false);
-  };
-
-  const handleResetFilter = () => {
-    handleSubmit();
-    resetForm();
-  };
 
   return (
     <Page title="Dashboard: History">

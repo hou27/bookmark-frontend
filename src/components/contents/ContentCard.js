@@ -8,7 +8,6 @@ import { styled, alpha } from "@mui/material/styles";
 // utils
 // import { /*fCurrency,*/ fNumber } from "../../../utils/formatNumber";
 //
-// import Label from "../../Label";
 // import ColorPreview from '../../ColorPreview';
 import * as React from "react";
 import Menu from "@mui/material/Menu";
@@ -19,6 +18,7 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 // import FileCopyIcon from '@mui/icons-material/FileCopy';
 import DeleteIcon from "@mui/icons-material/Delete";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import Label from "../Label";
 
 // ----------------------------------------------------------------------
 const HistoryDiv = styled("div")({
@@ -91,6 +91,7 @@ export default function ContentCard({ content, index }) {
   const {
     link,
     title,
+    comment,
     category: { name: categoryName },
   } = content;
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -104,32 +105,36 @@ export default function ContentCard({ content, index }) {
 
   return (
     <Card>
-      {/* <Box sx={{ pt: "100%", position: "relative" }}>
-        {status && (
-          <Label
-            variant="filled"
-            color={(status === "hot" && "error") || "info"}
-            sx={{
-              zIndex: 9,
-              top: 16,
-              right: 16,
-              position: "absolute",
-              textTransform: "uppercase",
-            }}
-          >
-            {status}
-          </Label>
-        )}
+      <Box sx={{ pt: "100%", position: "relative" }}>
+        <Label
+          variant="filled"
+          color={"info"}
+          sx={{
+            zIndex: 9,
+            top: 16,
+            right: 16,
+            position: "absolute",
+            textTransform: "uppercase",
+          }}
+        >
+          {categoryName}
+        </Label>
         <ProductImgStyle alt={title} src={null} />
-      </Box> */}
+      </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <HistoryDiv>
-          <Link to="#" color="inherit" underline="hover" component={RouterLink}>
-            <Typography variant="subtitle2" noWrap>
-              {title}
-            </Typography>
-          </Link>
+          {/* <Link
+            to={{ pathname: link }}
+            color="inherit"
+            underline="hover"
+            target="_blank"
+            component={null}
+          > */}
+          <Typography variant="subtitle2" noWrap>
+            {title ? title : "Untitled"}
+          </Typography>
+          {/* </Link> */}
           <div>
             <MenuIcon
               icon="carbon:overflow-menu-vertical"
@@ -174,7 +179,7 @@ export default function ContentCard({ content, index }) {
             variant="caption"
             sx={{ color: "text.disabled", display: "block" }}
           >
-            {categoryName}
+            {comment ? comment : "No comment"}
           </Typography>
           <Box
             key={index}
@@ -189,9 +194,6 @@ export default function ContentCard({ content, index }) {
               icon={starOutline}
               sx={{ width: 16, height: 16, mr: 0.5 }}
             />
-            <Typography variant="caption">
-              {categoryName /*fNumber(personalScore)*/}
-            </Typography>
           </Box>
         </Stack>
       </Stack>
