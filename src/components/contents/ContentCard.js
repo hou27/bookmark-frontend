@@ -6,9 +6,9 @@ import starOutline from "@iconify/icons-eva/star-outline";
 import { Box, Card, Link, Typography, Stack } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 // utils
-import { /*fCurrency,*/ fNumber } from "../../../utils/formatNumber";
+// import { /*fCurrency,*/ fNumber } from "../../../utils/formatNumber";
 //
-import Label from "../../Label";
+// import Label from "../../Label";
 // import ColorPreview from '../../ColorPreview';
 import * as React from "react";
 import Menu from "@mui/material/Menu";
@@ -83,12 +83,16 @@ const StyledMenu = styled((props) => (
 
 // ----------------------------------------------------------------------
 
-ShopProductCard.propTypes = {
+ContentCard.propTypes = {
   product: PropTypes.object,
 };
 
-export default function ShopProductCard({ product, index }) {
-  const { name, cover, status, genres, personalScore } = product;
+export default function ContentCard({ content, index }) {
+  const {
+    link,
+    title,
+    category: { name: categoryName },
+  } = content;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -100,7 +104,7 @@ export default function ShopProductCard({ product, index }) {
 
   return (
     <Card>
-      <Box sx={{ pt: "100%", position: "relative" }}>
+      {/* <Box sx={{ pt: "100%", position: "relative" }}>
         {status && (
           <Label
             variant="filled"
@@ -116,14 +120,14 @@ export default function ShopProductCard({ product, index }) {
             {status}
           </Label>
         )}
-        <ProductImgStyle alt={name} src={cover} />
-      </Box>
+        <ProductImgStyle alt={title} src={null} />
+      </Box> */}
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <HistoryDiv>
           <Link to="#" color="inherit" underline="hover" component={RouterLink}>
             <Typography variant="subtitle2" noWrap>
-              {name}
+              {title}
             </Typography>
           </Link>
           <div>
@@ -170,7 +174,7 @@ export default function ShopProductCard({ product, index }) {
             variant="caption"
             sx={{ color: "text.disabled", display: "block" }}
           >
-            {genres[Math.floor(Math.random() * genres.length)]}
+            {categoryName}
           </Typography>
           <Box
             key={index}
@@ -185,7 +189,9 @@ export default function ShopProductCard({ product, index }) {
               icon={starOutline}
               sx={{ width: 16, height: 16, mr: 0.5 }}
             />
-            <Typography variant="caption">{fNumber(personalScore)}</Typography>
+            <Typography variant="caption">
+              {categoryName /*fNumber(personalScore)*/}
+            </Typography>
           </Box>
         </Stack>
       </Stack>

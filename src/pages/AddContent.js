@@ -1,3 +1,4 @@
+import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 // material
 import { styled } from "@mui/material/styles";
@@ -42,7 +43,7 @@ export default function AddContent() {
       <ContentStyle>
         <Box sx={{ mb: 5 }}>
           <Typography variant="h4" gutterBottom>
-            Get started absolutely free.
+            Add your Content
           </Typography>
           <Typography sx={{ color: "text.secondary" }}>
             Free forever. No credit card needed.

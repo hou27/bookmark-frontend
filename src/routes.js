@@ -13,6 +13,8 @@ import NotFound from "./pages/Page404";
 import BookDetail from "./pages/BookDetail";
 import EditorPage from "./pages/Editor";
 import AddContent from "./pages/AddContent";
+import React from "react";
+import Contents from "./pages/Contents";
 
 // ----------------------------------------------------------------------
 
@@ -26,6 +28,7 @@ export default function Router() {
         { path: "app", element: <DashboardApp /> },
         { path: "user", element: <User /> },
         { path: "products", element: <Products /> },
+        { path: "contents", element: <Contents /> },
         { path: "blog", element: <Blog /> },
         { path: "detail/:id", element: <BookDetail /> },
         { path: "edit", element: <EditorPage /> },

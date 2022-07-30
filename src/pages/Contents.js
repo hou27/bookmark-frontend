@@ -1,5 +1,6 @@
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Icon } from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
 import { Link as RouterLink } from "react-router-dom";
@@ -9,17 +10,33 @@ import { Container, Button, Stack, Typography } from "@mui/material";
 import Page from "../components/Page";
 import {
   ProductSort,
-  ProductList,
   ProductCartWidget,
-  ProductFilterSidebar,
 } from "../components/_dashboard/products";
 //
-import HISTORYS from "../_mocks_/products";
+// import HISTORYS from "../_mocks_/products";
+import { instance } from "../lib/interceptors";
+import ContentList from "../components/contents/ContentList";
 
 // ----------------------------------------------------------------------
 
-export default function EcommerceShop() {
+export default function Contents() {
   const [openFilter, setOpenFilter] = useState(false);
+  const [list, setList] = React.useState([]);
+
+  useEffect(() => {
+    async function getMyList() {
+      await instance
+        .get("/api/users/load-contents")
+        .then((res) => {
+          console.log(res.data);
+          setList(res.data.contents);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    getMyList();
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -59,7 +76,7 @@ export default function EcommerceShop() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Book History
+            Content List
           </Typography>
           <Button
             variant="contained"
@@ -79,19 +96,11 @@ export default function EcommerceShop() {
           sx={{ mb: 5 }}
         >
           <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-            <ProductFilterSidebar
-              formik={formik}
-              isOpenFilter={openFilter}
-              onResetFilter={handleResetFilter}
-              onOpenFilter={handleOpenFilter}
-              onCloseFilter={handleCloseFilter}
-            />
             <ProductSort />
           </Stack>
         </Stack>
 
-        <ProductList products={HISTORYS} />
-        <ProductCartWidget />
+        <ContentList contents={list} />
       </Container>
     </Page>
   );
