@@ -14,7 +14,6 @@ import React from "react";
 
 export default function AddContentForm() {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
 
   const handleOpenFilter = () => {
@@ -97,23 +96,23 @@ export default function AddContentForm() {
             error={Boolean(touched.comment && errors.comment)}
             helperText={touched.comment && errors.comment}
           />
-
-          <CategorySideBar
-            formik={formik}
-            isOpenFilter={openFilter}
-            onOpenFilter={handleOpenFilter}
-            onCloseFilter={handleCloseFilter}
-          />
-          <TextField
-            fullWidth
-            autoComplete=""
-            type="text"
-            label="categoryName"
-            {...getFieldProps("categoryName")}
-            error={Boolean(touched.categoryName && errors.categoryName)}
-            helperText={touched.categoryName && errors.categoryName}
-          />
-
+          <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+            <TextField
+              fullWidth
+              autoComplete=""
+              type="text"
+              label="categoryName"
+              {...getFieldProps("categoryName")}
+              error={Boolean(touched.categoryName && errors.categoryName)}
+              helperText={touched.categoryName && errors.categoryName}
+            />
+            <CategorySideBar
+              formik={formik}
+              isOpenFilter={openFilter}
+              onOpenFilter={handleOpenFilter}
+              onCloseFilter={handleCloseFilter}
+            />
+          </Stack>
           <LoadingButton
             fullWidth
             size="large"
