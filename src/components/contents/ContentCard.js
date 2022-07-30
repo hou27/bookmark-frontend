@@ -88,12 +88,11 @@ ContentCard.propTypes = {
 };
 
 export default function ContentCard({ content, index }) {
-  const {
-    link,
-    title,
-    comment,
-    category: { name: categoryName },
-  } = content;
+  const { link, title, comment, category } = content;
+  let categoryName = "미분류";
+  if (category?.name) {
+    categoryName = category.name;
+  }
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
