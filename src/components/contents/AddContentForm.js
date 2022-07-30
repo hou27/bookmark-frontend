@@ -9,6 +9,7 @@ import { LoadingButton } from "@mui/lab";
 import { instance } from "../../lib/interceptors";
 import CategorySideBar from "./CategorySideBar";
 import React from "react";
+import axios from "axios";
 
 // ----------------------------------------------------------------------
 
@@ -42,7 +43,7 @@ export default function AddContentForm() {
     },
     validationSchema: RegisterSchema,
     onSubmit: () => {
-      navigate("/dashboard/products", { replace: true });
+      navigate("/dashboard/contents", { replace: true });
     },
   });
 

@@ -91,58 +91,56 @@ export default function CategorySideBar({
       </Button>
 
       <FormikProvider value={formik}>
-        <Form autoComplete="off" noValidate>
-          <Drawer
-            anchor="right"
-            open={isOpenFilter}
-            onClose={onCloseFilter}
-            PaperProps={{
-              sx: { width: 280, border: "none", overflow: "hidden" },
-            }}
+        <Drawer
+          anchor="right"
+          open={isOpenFilter}
+          onClose={onCloseFilter}
+          PaperProps={{
+            sx: { width: 280, border: "none", overflow: "hidden" },
+          }}
+        >
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            sx={{ px: 1, py: 2 }}
           >
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-              sx={{ px: 1, py: 2 }}
-            >
-              <Typography variant="subtitle1" sx={{ ml: 1 }}>
-                Categories
-              </Typography>
-              <IconButton onClick={onCloseFilter}>
-                <Icon icon={closeFill} width={20} height={20} />
-              </IconButton>
+            <Typography variant="subtitle1" sx={{ ml: 1 }}>
+              Categories
+            </Typography>
+            <IconButton onClick={onCloseFilter}>
+              <Icon icon={closeFill} width={20} height={20} />
+            </IconButton>
+          </Stack>
+
+          <Divider />
+
+          <Scrollbar>
+            <Stack spacing={3} sx={{ p: 3 }}>
+              <div>
+                <Typography variant="subtitle1" gutterBottom>
+                  Category
+                </Typography>
+                <RadioGroup {...getFieldProps("category")}>
+                  {FILTER_CATEGORY_OPTIONS.map((item) => (
+                    <FormControlLabel
+                      key={item}
+                      value={item}
+                      control={<Radio />}
+                      label={item}
+                    />
+                  ))}
+                </RadioGroup>
+              </div>
+
+              <div>
+                <Typography variant="subtitle1" gutterBottom>
+                  Or Add new Category!
+                </Typography>
+              </div>
             </Stack>
-
-            <Divider />
-
-            <Scrollbar>
-              <Stack spacing={3} sx={{ p: 3 }}>
-                <div>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Category
-                  </Typography>
-                  <RadioGroup {...getFieldProps("category")}>
-                    {FILTER_CATEGORY_OPTIONS.map((item) => (
-                      <FormControlLabel
-                        key={item}
-                        value={item}
-                        control={<Radio />}
-                        label={item}
-                      />
-                    ))}
-                  </RadioGroup>
-                </div>
-
-                <div>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Or Add new Category!
-                  </Typography>
-                </div>
-              </Stack>
-            </Scrollbar>
-          </Drawer>
-        </Form>
+          </Scrollbar>
+        </Drawer>
       </FormikProvider>
     </>
   );
