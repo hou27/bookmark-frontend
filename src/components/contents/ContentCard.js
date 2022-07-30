@@ -19,6 +19,7 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Label from "../Label";
+import { instance } from "../../lib/interceptors";
 
 // ----------------------------------------------------------------------
 const HistoryDiv = styled("div")({
@@ -88,12 +89,24 @@ ContentCard.propTypes = {
 };
 
 export default function ContentCard({ content, index }) {
-  const { link, title, coverImg, comment, category } = content;
+  const { id, link, title, coverImg, comment, category } = content;
   let categoryName = "미분류";
   if (category?.name) {
     categoryName = category.name;
   }
   const [anchorEl, setAnchorEl] = React.useState(null);
+  async function deleteContent() {
+    return await instance
+      .delete(`api/contents/delete/${id}`)
+      .then(function (res) {
+        console.log(res);
+        return true;
+      })
+      .catch(function (error) {
+        console.log("err : ", error);
+        return false;
+      });
+  }
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -152,7 +165,13 @@ export default function ContentCard({ content, index }) {
                 <EditIcon />
                 Edit
               </MenuItem>
-              <MenuItem onClick={handleClose} disableRipple>
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  deleteContent();
+                }}
+                disableRipple
+              >
                 <DeleteIcon />
                 Delete
               </MenuItem>
