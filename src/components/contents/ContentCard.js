@@ -118,7 +118,7 @@ export default function ContentCard({ content, index }) {
   };
 
   const handleClickPopUp = (event) => {
-    setAnchorElPopUp(1);
+    setAnchorElPopUp(event.currentTarget);
   };
   const handleClosePopUp = () => {
     setAnchorElPopUp(null);
@@ -175,8 +175,8 @@ export default function ContentCard({ content, index }) {
             >
               <MenuItem
                 onClick={(event) => {
-                  handleClose(event);
-                  handleClickPopUp();
+                  handleClose();
+                  handleClickPopUp(event);
                 }}
                 disableRipple
               >
@@ -210,11 +210,11 @@ export default function ContentCard({ content, index }) {
               onClose={handleClosePopUp}
               anchorOrigin={{
                 vertical: "top",
-                horizontal: "left",
+                horizontal: "center",
               }}
               transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: "bottom",
+                horizontal: "center",
               }}
             >
               <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
