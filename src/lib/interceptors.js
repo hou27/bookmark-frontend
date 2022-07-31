@@ -1,7 +1,6 @@
 import axios from "axios";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../localKey";
 
-// const default_access_token = getCookie(ACCESS_TOKEN);
 const default_access_token = localStorage.getItem(ACCESS_TOKEN);
 export const instance = axios.create({
   baseURL: "https://bookmark-test-server-hou27.herokuapp.com/",
@@ -9,11 +8,6 @@ export const instance = axios.create({
 });
 
 // instance.interceptors.request.use((config) => {
-//   console.log("access_token in pre req", localStorage.getItem(ACCESS_TOKEN));
-//   console.log("refresh_token in pre req", localStorage.getItem(REFRESH_TOKEN));
-//   console.log(instance.defaults.headers.common["Authorization"]);
-//   // instance.config
-//   console.log(config);
 //   return config;
 // });
 
@@ -38,7 +32,6 @@ instance.interceptors.response.use(
       ) {
         prevRequest.retry = true;
         const preRefreshToken = localStorage.getItem(REFRESH_TOKEN); // getCookie(REFRESH_TOKEN);
-        console.log("prevRefreshToken : ", preRefreshToken);
         if (preRefreshToken) {
           // refresh token을 이용하여 access token 재발급
           async function regenerateToken() {
@@ -59,12 +52,10 @@ instance.interceptors.response.use(
                 // });
                 localStorage.setItem(ACCESS_TOKEN, access_token);
                 localStorage.setItem(REFRESH_TOKEN, refresh_token);
-                console.log("access_token after reissue", access_token);
 
                 // header 새로운 token으로 재설정
                 prevRequest.headers.Authorization = `Bearer ${access_token}`;
 
-                // console.log("pre req ::: ", prevRequest);
                 // 실패했던 기존 request 재시도
                 return await instance(prevRequest);
               })
