@@ -17,26 +17,26 @@ const sidebarConfig = [
     path: "/dashboard/app",
     icon: getIcon(pieChart2Fill),
   },
-  {
-    title: "user",
-    path: "/dashboard/user",
-    icon: getIcon(peopleFill),
-  },
-  {
-    title: "product",
-    path: "/dashboard/products",
-    icon: getIcon(shoppingBagFill),
-  },
+  // {
+  //   title: "user",
+  //   path: "/dashboard/user",
+  //   icon: getIcon(peopleFill),
+  // },
+  // {
+  //   title: "product",
+  //   path: "/dashboard/products",
+  //   icon: getIcon(shoppingBagFill),
+  // },
   {
     title: "content",
     path: "/dashboard/contents",
     icon: getIcon(shoppingBagFill),
   },
-  {
-    title: "blog",
-    path: "/dashboard/blog",
-    icon: getIcon(fileTextFill),
-  },
+  // {
+  //   title: "blog",
+  //   path: "/dashboard/blog",
+  //   icon: getIcon(fileTextFill),
+  // },
   {
     title: "login",
     path: "/login",
@@ -47,11 +47,11 @@ const sidebarConfig = [
     path: "/register",
     icon: getIcon(personAddFill),
   },
-  {
-    title: "Not found",
-    path: "/404",
-    icon: getIcon(alertTriangleFill),
-  },
+  // {
+  //   title: "Not found",
+  //   path: "/404",
+  //   icon: getIcon(alertTriangleFill),
+  // },
 ];
 
 export default sidebarConfig;
