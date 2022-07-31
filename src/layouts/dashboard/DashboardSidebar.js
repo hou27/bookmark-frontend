@@ -68,7 +68,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             console.log(res.data);
             res.status === 200 ? setLoggedIn(true) : setLoggedIn(false);
             setAccountInfo(res.data);
-            localStorage.setItem(LOGGEDIN, loggedIn ? "true" : "false");
+            // localStorage.setItem(LOGGEDIN, loggedIn ? "true" : "false");
           })
           .catch(function (error) {
             console.log("err : ", error);
