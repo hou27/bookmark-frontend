@@ -257,84 +257,13 @@ export default function ContentCard({ content, index }) {
                 More
               </MenuItem>
             </StyledMenu>
-            <Popover
-              id={popoUpId}
-              open={openPopUp}
-              anchorEl={anchorElPopUp}
-              onClose={handleClosePopUp}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "center",
-              }}
-              transformOrigin={{
-                vertical: "bottom",
-                horizontal: "center",
-              }}
-            >
-              <Typography sx={{ p: 2 }}>Update your content Info.</Typography>
-              {/* Update Content Form Start*/}
-              {/* <FormikProvider value={formik}>
-                <Form
-                  autoComplete="off"
-                  noValidate
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    handleSubmit();
-                  }}
-                >
-                  <Stack spacing={3}>
-                    <TextField
-                      fullWidth
-                      autoComplete="title"
-                      type="text"
-                      label="title"
-                      {...getFieldProps("title")}
-                      error={Boolean(touched.title && errors.title)}
-                      helperText={touched.title && errors.title}
-                    />
-
-                    <TextField
-                      fullWidth
-                      autoComplete="comment"
-                      type="text"
-                      label="comment"
-                      {...getFieldProps("comment")}
-                      error={Boolean(touched.comment && errors.comment)}
-                      helperText={touched.comment && errors.comment}
-                    />
-
-                    <TextField
-                      fullWidth
-                      autoComplete="categoryName"
-                      type="text"
-                      label="categoryName"
-                      {...getFieldProps("categoryName")}
-                      error={Boolean(
-                        touched.categoryName && errors.categoryName
-                      )}
-                      helperText={touched.categoryName && errors.categoryName}
-                    />
-                  </Stack>
-
-                  <LoadingButton
-                    fullWidth
-                    size="large"
-                    type="submit"
-                    variant="contained"
-                    loading={isSubmitting}
-                  >
-                    Save
-                  </LoadingButton>
-                </Form>
-              </FormikProvider> */}
-              {/* Update Content Form End */}
-            </Popover>
+            {/* Update Content Form Start*/}
             <Dialog
               disableEscapeKeyDown
               open={openPopUp}
               onClose={handleClosePopUp}
             >
-              <DialogTitle>Fill the form</DialogTitle>
+              <DialogTitle>Update your content Info.</DialogTitle>
               <DialogContent>
                 <Box
                   component="form"
@@ -355,6 +284,7 @@ export default function ContentCard({ content, index }) {
                           autoComplete="title"
                           type="text"
                           label="title"
+                          defaultValue={title}
                           {...getFieldProps("title")}
                           error={Boolean(touched.title && errors.title)}
                           helperText={touched.title && errors.title}
@@ -365,6 +295,7 @@ export default function ContentCard({ content, index }) {
                           autoComplete="comment"
                           type="text"
                           label="comment"
+                          defaultValue={comment}
                           {...getFieldProps("comment")}
                           error={Boolean(touched.comment && errors.comment)}
                           helperText={touched.comment && errors.comment}
@@ -375,6 +306,7 @@ export default function ContentCard({ content, index }) {
                           autoComplete="categoryName"
                           type="text"
                           label="categoryName"
+                          defaultValue={categoryName}
                           {...getFieldProps("categoryName")}
                           error={Boolean(
                             touched.categoryName && errors.categoryName
@@ -389,10 +321,12 @@ export default function ContentCard({ content, index }) {
                 </Box>
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleClosePopUp}>Cancel</Button>
                 <LoadingButton loading={isSubmitting}>Save</LoadingButton>
               </DialogActions>
             </Dialog>
+
+            {/* Update Content Form End */}
           </div>
         </HistoryDiv>
         <Stack
