@@ -3,7 +3,20 @@ import { Link as RouterLink } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import starOutline from "@iconify/icons-eva/star-outline";
 // material
-import { Box, Card, Link, Typography, Stack, Popover } from "@mui/material";
+import {
+  Box,
+  Card,
+  Link,
+  Typography,
+  Stack,
+  Popover,
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+} from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 // utils
 // import { /*fCurrency,*/ fNumber } from "../../../utils/formatNumber";
@@ -20,6 +33,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Label from "../Label";
 import { instance } from "../../lib/interceptors";
+
+// ----------------------------------------------------------------------
+import { Form, FormikProvider, useFormik } from "formik";
+import * as Yup from "yup";
+import { LoadingButton } from "@mui/lab";
 
 // ----------------------------------------------------------------------
 const HistoryDiv = styled("div")({
@@ -98,15 +116,14 @@ export default function ContentCard({ content, index }) {
   const [anchorElPopUp, setAnchorElPopUp] = React.useState(null);
 
   async function deleteContent() {
-    return await instance
+    await instance
       .delete(`api/contents/delete/${id}`)
       .then(function (res) {
         console.log(res);
-        return true;
+        window.location.href = window.location.href;
       })
       .catch(function (error) {
         console.log("err : ", error);
-        return false;
       });
   }
   const open = Boolean(anchorEl);
@@ -126,6 +143,43 @@ export default function ContentCard({ content, index }) {
 
   const openPopUp = Boolean(anchorElPopUp);
   const popoUpId = open ? "simple-popover" : undefined;
+
+  /**
+   * 콘텐츠 수정
+   */
+  const UpdateContentSchema = Yup.object().shape({
+    title: Yup.string(),
+    comment: Yup.string(),
+    categoryName: Yup.string(),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      comment: "",
+      categoryName: "",
+    },
+    validationSchema: UpdateContentSchema,
+    onSubmit: async (values) => {
+      const { title, comment, categoryName } = values;
+      await instance
+        .post("api/contents/update", {
+          title,
+          comment,
+          categoryName,
+        })
+        .then(function (res) {
+          console.log(res);
+        })
+        .catch(function (error) {
+          console.log("err : ", error);
+        });
+      // navigate("/dashboard", { replace: true });
+      window.location.href = window.location.href;
+    },
+  });
+
+  const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
 
   return (
     <Card>
@@ -217,8 +271,128 @@ export default function ContentCard({ content, index }) {
                 horizontal: "center",
               }}
             >
-              <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
+              <Typography sx={{ p: 2 }}>Update your content Info.</Typography>
+              {/* Update Content Form Start*/}
+              {/* <FormikProvider value={formik}>
+                <Form
+                  autoComplete="off"
+                  noValidate
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSubmit();
+                  }}
+                >
+                  <Stack spacing={3}>
+                    <TextField
+                      fullWidth
+                      autoComplete="title"
+                      type="text"
+                      label="title"
+                      {...getFieldProps("title")}
+                      error={Boolean(touched.title && errors.title)}
+                      helperText={touched.title && errors.title}
+                    />
+
+                    <TextField
+                      fullWidth
+                      autoComplete="comment"
+                      type="text"
+                      label="comment"
+                      {...getFieldProps("comment")}
+                      error={Boolean(touched.comment && errors.comment)}
+                      helperText={touched.comment && errors.comment}
+                    />
+
+                    <TextField
+                      fullWidth
+                      autoComplete="categoryName"
+                      type="text"
+                      label="categoryName"
+                      {...getFieldProps("categoryName")}
+                      error={Boolean(
+                        touched.categoryName && errors.categoryName
+                      )}
+                      helperText={touched.categoryName && errors.categoryName}
+                    />
+                  </Stack>
+
+                  <LoadingButton
+                    fullWidth
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                    loading={isSubmitting}
+                  >
+                    Save
+                  </LoadingButton>
+                </Form>
+              </FormikProvider> */}
+              {/* Update Content Form End */}
             </Popover>
+            <Dialog
+              disableEscapeKeyDown
+              open={openPopUp}
+              onClose={handleClosePopUp}
+            >
+              <DialogTitle>Fill the form</DialogTitle>
+              <DialogContent>
+                <Box
+                  component="form"
+                  sx={{ display: "flex", flexWrap: "wrap" }}
+                >
+                  <FormikProvider value={formik}>
+                    <Form
+                      autoComplete="off"
+                      noValidate
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSubmit();
+                      }}
+                    >
+                      <Stack spacing={3}>
+                        <TextField
+                          fullWidth
+                          autoComplete="title"
+                          type="text"
+                          label="title"
+                          {...getFieldProps("title")}
+                          error={Boolean(touched.title && errors.title)}
+                          helperText={touched.title && errors.title}
+                        />
+
+                        <TextField
+                          fullWidth
+                          autoComplete="comment"
+                          type="text"
+                          label="comment"
+                          {...getFieldProps("comment")}
+                          error={Boolean(touched.comment && errors.comment)}
+                          helperText={touched.comment && errors.comment}
+                        />
+
+                        <TextField
+                          fullWidth
+                          autoComplete="categoryName"
+                          type="text"
+                          label="categoryName"
+                          {...getFieldProps("categoryName")}
+                          error={Boolean(
+                            touched.categoryName && errors.categoryName
+                          )}
+                          helperText={
+                            touched.categoryName && errors.categoryName
+                          }
+                        />
+                      </Stack>
+                    </Form>
+                  </FormikProvider>
+                </Box>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <LoadingButton loading={isSubmitting}>Save</LoadingButton>
+              </DialogActions>
+            </Dialog>
           </div>
         </HistoryDiv>
         <Stack

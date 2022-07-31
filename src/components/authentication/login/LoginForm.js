@@ -73,28 +73,6 @@ export default function LoginForm() {
     setShowPassword((show) => !show);
   };
 
-  // async function onSubmit() {
-  //   console.log(values);
-  //   await instance
-  //     .post("api/auth/login", {
-  //       email: values.email,
-  //       password: values.password,
-  //     })
-  //     .then(function (res) {
-  //       console.log(res);
-  //       const { access_token, refresh_token } = res.data;
-  //       localStorage.setItem(ACCESS_TOKEN, access_token);
-  //       localStorage.setItem(REFRESH_TOKEN, refresh_token);
-  //       instance.defaults.headers.common[
-  //         "Authorization"
-  //       ] = `Bearer ${access_token}`;
-  //     })
-  //     .catch(function (error) {
-  //       console.log("err : ", error);
-  //     })
-  //     .then(function () {});
-  // }
-
   return (
     <FormikProvider value={formik}>
       <Form
