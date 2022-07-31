@@ -42,8 +42,27 @@ export default function LoginForm() {
       remember: true,
     },
     validationSchema: LoginSchema,
-    onSubmit: () => {
-      navigate("/dashboard", { replace: true });
+    onSubmit: async (values) => {
+      const { email, password } = values;
+      await instance
+        .post("api/auth/login", {
+          email,
+          password,
+        })
+        .then(function (res) {
+          console.log(res);
+          const { access_token, refresh_token } = res.data;
+          localStorage.setItem(ACCESS_TOKEN, access_token);
+          localStorage.setItem(REFRESH_TOKEN, refresh_token);
+          instance.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${access_token}`;
+        })
+        .catch(function (error) {
+          console.log("err : ", error);
+        });
+      // navigate("/dashboard", { replace: true });
+      window.location.href = `http://${window.location.host}/dashboard`;
     },
   });
 
@@ -54,35 +73,36 @@ export default function LoginForm() {
     setShowPassword((show) => !show);
   };
 
-  async function onSubmit() {
-    console.log(values);
-    await instance
-      .post("api/auth/login", {
-        email: values.email,
-        password: values.password,
-      })
-      .then(function (res) {
-        console.log(res);
-        const { access_token, refresh_token } = res.data;
-        localStorage.setItem(ACCESS_TOKEN, access_token);
-        localStorage.setItem(REFRESH_TOKEN, refresh_token);
-        instance.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${access_token}`;
-      })
-      .catch(function (error) {
-        console.log("err : ", error);
-      })
-      .then(function () {});
-  }
+  // async function onSubmit() {
+  //   console.log(values);
+  //   await instance
+  //     .post("api/auth/login", {
+  //       email: values.email,
+  //       password: values.password,
+  //     })
+  //     .then(function (res) {
+  //       console.log(res);
+  //       const { access_token, refresh_token } = res.data;
+  //       localStorage.setItem(ACCESS_TOKEN, access_token);
+  //       localStorage.setItem(REFRESH_TOKEN, refresh_token);
+  //       instance.defaults.headers.common[
+  //         "Authorization"
+  //       ] = `Bearer ${access_token}`;
+  //     })
+  //     .catch(function (error) {
+  //       console.log("err : ", error);
+  //     })
+  //     .then(function () {});
+  // }
 
   return (
     <FormikProvider value={formik}>
       <Form
         autoComplete="off"
         noValidate
-        onSubmit={() => {
-          handleSubmit(onSubmit());
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
         }}
       >
         <Stack spacing={3}>

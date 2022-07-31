@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import starOutline from "@iconify/icons-eva/star-outline";
 // material
-import { Box, Card, Link, Typography, Stack } from "@mui/material";
+import { Box, Card, Link, Typography, Stack, Popover } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 // utils
 // import { /*fCurrency,*/ fNumber } from "../../../utils/formatNumber";
@@ -95,6 +95,8 @@ export default function ContentCard({ content, index }) {
     categoryName = category.name;
   }
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorElPopUp, setAnchorElPopUp] = React.useState(null);
+
   async function deleteContent() {
     return await instance
       .delete(`api/contents/delete/${id}`)
@@ -114,6 +116,16 @@ export default function ContentCard({ content, index }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleClickPopUp = (event) => {
+    setAnchorElPopUp(1);
+  };
+  const handleClosePopUp = () => {
+    setAnchorElPopUp(null);
+  };
+
+  const openPopUp = Boolean(anchorElPopUp);
+  const popoUpId = open ? "simple-popover" : undefined;
 
   return (
     <Card>
@@ -161,7 +173,13 @@ export default function ContentCard({ content, index }) {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose} disableRipple>
+              <MenuItem
+                onClick={(event) => {
+                  handleClose(event);
+                  handleClickPopUp();
+                }}
+                disableRipple
+              >
                 <EditIcon />
                 Edit
               </MenuItem>
@@ -185,6 +203,22 @@ export default function ContentCard({ content, index }) {
                 More
               </MenuItem>
             </StyledMenu>
+            <Popover
+              id={popoUpId}
+              open={openPopUp}
+              anchorEl={anchorElPopUp}
+              onClose={handleClosePopUp}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+            >
+              <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
+            </Popover>
           </div>
         </HistoryDiv>
         <Stack
