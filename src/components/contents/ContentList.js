@@ -7,7 +7,7 @@ import ContentCard from "./ContentCard";
 // ----------------------------------------------------------------------
 
 ContentList.propTypes = {
-  products: PropTypes.array.isRequired,
+  contents: PropTypes.array.isRequired,
 };
 
 export default function ContentList({ contents, ...other }) {

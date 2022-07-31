@@ -142,7 +142,6 @@ export default function ContentCard({ content, index }) {
   };
 
   const openPopUp = Boolean(anchorElPopUp);
-  const popoUpId = open ? "simple-popover" : undefined;
 
   /**
    * 콘텐츠 수정
@@ -155,15 +154,17 @@ export default function ContentCard({ content, index }) {
 
   const formik = useFormik({
     initialValues: {
-      title: "",
-      comment: "",
-      categoryName: "",
+      title,
+      comment,
+      categoryName,
     },
     validationSchema: UpdateContentSchema,
     onSubmit: async (values) => {
       const { title, comment, categoryName } = values;
+      console.log(values);
       await instance
         .post("api/contents/update", {
+          link,
           title,
           comment,
           categoryName,
@@ -258,74 +259,74 @@ export default function ContentCard({ content, index }) {
               </MenuItem>
             </StyledMenu>
             {/* Update Content Form Start*/}
-            <Dialog
-              disableEscapeKeyDown
-              open={openPopUp}
-              onClose={handleClosePopUp}
-            >
-              <DialogTitle>Update your content Info.</DialogTitle>
-              <DialogContent>
-                <Box
-                  component="form"
-                  sx={{ display: "flex", flexWrap: "wrap" }}
-                >
-                  <FormikProvider value={formik}>
-                    <Form
-                      autoComplete="off"
-                      noValidate
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        handleSubmit();
-                      }}
-                    >
-                      <Stack spacing={3}>
-                        <TextField
-                          fullWidth
-                          autoComplete="title"
-                          type="text"
-                          label="title"
-                          defaultValue={title}
-                          {...getFieldProps("title")}
-                          error={Boolean(touched.title && errors.title)}
-                          helperText={touched.title && errors.title}
-                        />
+            <FormikProvider value={formik}>
+              <Form
+                autoComplete="off"
+                noValidate
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSubmit();
+                }}
+              >
+                <div>
+                  <Dialog
+                    disableEscapeKeyDown
+                    open={openPopUp}
+                    onClose={handleClosePopUp}
+                  >
+                    <DialogTitle>Update your content Info.</DialogTitle>
 
-                        <TextField
-                          fullWidth
-                          autoComplete="comment"
-                          type="text"
-                          label="comment"
-                          defaultValue={comment}
-                          {...getFieldProps("comment")}
-                          error={Boolean(touched.comment && errors.comment)}
-                          helperText={touched.comment && errors.comment}
-                        />
+                    <DialogContent>
+                      <Box
+                        component="form"
+                        sx={{ display: "flex", flexWrap: "wrap" }}
+                      >
+                        <Stack spacing={3}>
+                          <TextField
+                            fullWidth
+                            type="text"
+                            label="title"
+                            {...getFieldProps("title")}
+                            error={Boolean(touched.title && errors.title)}
+                            // helperText={touched.title && errors.title}
+                          />
 
-                        <TextField
-                          fullWidth
-                          autoComplete="categoryName"
-                          type="text"
-                          label="categoryName"
-                          defaultValue={categoryName}
-                          {...getFieldProps("categoryName")}
-                          error={Boolean(
-                            touched.categoryName && errors.categoryName
-                          )}
-                          helperText={
-                            touched.categoryName && errors.categoryName
-                          }
-                        />
-                      </Stack>
-                    </Form>
-                  </FormikProvider>
-                </Box>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClosePopUp}>Cancel</Button>
-                <LoadingButton loading={isSubmitting}>Save</LoadingButton>
-              </DialogActions>
-            </Dialog>
+                          <TextField
+                            fullWidth
+                            type="text"
+                            label="comment"
+                            {...getFieldProps("comment")}
+                            error={Boolean(touched.comment && errors.comment)}
+                            // helperText={touched.comment && errors.comment}
+                          />
 
+                          <TextField
+                            fullWidth
+                            type="text"
+                            label="categoryName"
+                            {...getFieldProps("categoryName")}
+                            error={Boolean(
+                              touched.categoryName && errors.categoryName
+                            )}
+                            helperText={
+                              touched.categoryName && errors.categoryName
+                            }
+                          />
+                          <DialogActions>
+                            <Button type="button" onClick={handleClosePopUp}>
+                              Cancel
+                            </Button>
+                            <LoadingButton type="submit" loading={isSubmitting}>
+                              Save
+                            </LoadingButton>
+                          </DialogActions>
+                        </Stack>
+                      </Box>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              </Form>
+            </FormikProvider>
             {/* Update Content Form End */}
           </div>
         </HistoryDiv>
