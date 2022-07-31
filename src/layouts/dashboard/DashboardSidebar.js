@@ -52,7 +52,6 @@ DashboardSidebar.propTypes = {
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { pathname } = useLocation();
 
-  // let loggedIn = false;
   const [loggedIn, setLoggedIn] = useState(false);
   const [accountInfo, setAccountInfo] = useState(null);
 
@@ -65,8 +64,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         await instance
           .get("api/users/me")
           .then(function (res) {
-            console.log(res);
-            setLoggedIn(true);
+            console.log(res.data);
+            res.status === 200 ? setLoggedIn(true) : setLoggedIn(false);
             setAccountInfo(res.data);
           })
           .catch(function (error) {
@@ -106,7 +105,11 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             <Avatar src={account.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: "text.primary" }}>
-                {loggedIn ? accountInfo?.name : "Guest"}
+                {loggedIn
+                  ? accountInfo?.name
+                    ? accountInfo.name
+                    : "Loading..."
+                  : "Guest"}
               </Typography>
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
                 {account.role}
@@ -116,7 +119,11 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         </Link>
       </Box>
 
-      <NavSection navConfig={sidebarConfig} />
+      <NavSection
+        navConfig={
+          loggedIn ? sidebarConfig.slice(0, 5) : sidebarConfig.slice(-3)
+        }
+      />
 
       <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>
