@@ -144,7 +144,11 @@ export default function LoginForm() {
             label="Remember me"
           />
 
-          <Link component={RouterLink} variant="subtitle2" to="#">
+          <Link
+            to="/send-password-reset-email"
+            component={RouterLink}
+            variant="subtitle2"
+          >
             Forgot password?
           </Link>
         </Stack>

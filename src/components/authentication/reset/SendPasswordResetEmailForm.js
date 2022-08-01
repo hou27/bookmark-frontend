@@ -41,8 +41,9 @@ export default function SendPasswordResetEmailForm() {
     validationSchema: SendPasswordResetEmailSchema,
     onSubmit: async (values) => {
       const { email } = values;
+      const encodedEmail = encodeURI(email);
       await instance
-        .get(`/api/users/reset-password${email}`)
+        .get(`/api/auth/send-password-reset-email/${encodedEmail}`)
         .then(function (res) {
           console.log(res);
           if (res.data.ok) {
