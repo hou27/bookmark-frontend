@@ -15,6 +15,7 @@ import EditorPage from "./pages/Editor";
 import AddContent from "./pages/AddContent";
 import React from "react";
 import Contents from "./pages/Contents";
+import ResetPassword from "./pages/ResetPassword";
 
 // ----------------------------------------------------------------------
 
@@ -41,6 +42,7 @@ export default function Router() {
       children: [
         { path: "login", element: <Login /> },
         { path: "register", element: <Register /> },
+        { path: "reset/:code", element: <ResetPassword /> },
         { path: "404", element: <NotFound /> },
         { path: "/", element: <Navigate to="/dashboard" /> },
         { path: "*", element: <Navigate to="/404" /> },
