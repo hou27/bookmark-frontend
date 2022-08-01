@@ -44,10 +44,8 @@ const ContentStyle = styled("div")(({ theme }) => ({
 
 export default function ResetPassword() {
   const pathname = window.location.pathname.split("/").at(-2);
-  let code = "";
-  if (pathname === "reset") {
-    code = window.location.pathname.split("/").at(-1);
-  }
+  let code =
+    pathname === "reset" ? window.location.pathname.split("/").at(-1) : "";
   return (
     <RootStyle title="Reset Password">
       <MHidden width="mdDown">
@@ -72,7 +70,7 @@ export default function ResetPassword() {
           </Stack>
 
           {pathname === "reset" ? (
-            <ResetPasswordForm code />
+            <ResetPasswordForm code={code} />
           ) : (
             <SendPasswordResetEmailForm />
           )}
