@@ -54,12 +54,12 @@ export default function AddContentForm() {
         })
         .then(function (res) {
           console.log(res);
-          return res;
+          navigate("/dashboard/contents", { replace: true });
+          // window.location.href = `${window.location.origin}/dashboard/contents`;
         })
         .catch(function (error) {
           console.log("err : ", error);
         });
-      navigate("/dashboard/contents", { replace: true });
     },
   });
 
@@ -95,7 +95,8 @@ export default function AddContentForm() {
       <Form
         autoComplete="off"
         noValidate
-        onSubmit={() => {
+        onSubmit={(e) => {
+          e.preventDefault();
           handleSubmit();
         }}
       >

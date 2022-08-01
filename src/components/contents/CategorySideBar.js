@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Icon } from "@iconify/react";
 import { Form, FormikProvider } from "formik";
@@ -24,6 +24,7 @@ import {
 //
 import Scrollbar from "../Scrollbar";
 import ColorManyPicker from "../ColorManyPicker";
+import { instance } from "../../lib/interceptors";
 
 // ----------------------------------------------------------------------
 
@@ -79,9 +80,27 @@ export default function CategorySideBar({
   setCategory,
   formik,
 }) {
+  const [categoryList, setCategoryList] = useState([]);
+
   const setCategoryValue = (value) => {
     setCategory(value);
   };
+  useEffect(() => {
+    async function getCategoryList() {
+      await instance
+        .get("/api/users/load-categories")
+        .then((res) => {
+          if (res.data.ok) {
+            console.log(res.data.categories);
+            setCategoryList(res.data.categories);
+          }
+        })
+        .catch((error) => {
+          console.log("err : ", error);
+        });
+    }
+    getCategoryList();
+  }, [setCategoryList]);
 
   return (
     <>
@@ -129,15 +148,15 @@ export default function CategorySideBar({
 
                 // {...getFieldProps("category")}
                 >
-                  {FILTER_CATEGORY_OPTIONS.map((item) => (
+                  {categoryList.map((item) => (
                     <FormControlLabel
                       onChange={(e) => {
                         setCategoryValue(e.target?.value);
                       }}
-                      key={item}
-                      value={item}
+                      key={item.id}
+                      value={item.name}
                       control={<Radio />}
-                      label={item}
+                      label={item.name}
                     />
                   ))}
                 </RadioGroup>
