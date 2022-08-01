@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik, Form, FormikProvider } from "formik";
 import { useNavigate } from "react-router-dom";
 // material
@@ -8,7 +8,6 @@ import { LoadingButton } from "@mui/lab";
 
 import { instance } from "../../lib/interceptors";
 import CategorySideBar from "./CategorySideBar";
-import React from "react";
 import axios from "axios";
 
 // ----------------------------------------------------------------------
@@ -63,6 +62,12 @@ export default function AddContentForm() {
       navigate("/dashboard/contents", { replace: true });
     },
   });
+
+  useEffect(() => {
+    if (category) {
+      formik.setFieldValue("categoryName", category);
+    }
+  }, [category]);
 
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
     formik;
@@ -121,10 +126,6 @@ export default function AddContentForm() {
               type="text"
               label="categoryName"
               {...getFieldProps("categoryName")}
-              // onChange={(e) => {
-              //   setCategory(e.target.value);
-              // }}
-              value={category}
               error={Boolean(touched.categoryName && errors.categoryName)}
               helperText={touched.categoryName && errors.categoryName}
             />
