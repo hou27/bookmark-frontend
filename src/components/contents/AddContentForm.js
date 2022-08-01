@@ -16,6 +16,7 @@ import axios from "axios";
 export default function AddContentForm() {
   const navigate = useNavigate();
   const [openFilter, setOpenFilter] = useState(false);
+  const [category, setCategory] = useState("");
 
   const handleOpenFilter = () => {
     setOpenFilter(true);
@@ -39,10 +40,26 @@ export default function AddContentForm() {
       // title: "",
       // description: "",
       comment: "",
-      categoryName: "",
+      categoryName: category,
     },
     validationSchema: RegisterSchema,
-    onSubmit: () => {
+    onSubmit: async (values) => {
+      const { link, comment, categoryName } = values;
+      await instance
+        .post("api/contents/add", {
+          link,
+          // title,
+          // description,
+          comment,
+          categoryName,
+        })
+        .then(function (res) {
+          console.log(res);
+          return res;
+        })
+        .catch(function (error) {
+          console.log("err : ", error);
+        });
       navigate("/dashboard/contents", { replace: true });
     },
   });
@@ -50,23 +67,23 @@ export default function AddContentForm() {
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
     formik;
 
-  async function onSubmit() {
-    await instance
-      .post("api/contents/add", {
-        link: values.link,
-        // title: values?.title,
-        // description: values?.description,
-        comment: values?.comment,
-        categoryName: values?.categoryName,
-      })
-      .then(function (res) {
-        console.log(res);
-        return res;
-      })
-      .catch(function (error) {
-        console.log("err : ", error);
-      });
-  }
+  // async function onSubmit() {
+  //   await instance
+  //     .post("api/contents/add", {
+  //       link: values.link,
+  //       // title: values?.title,
+  //       // description: values?.description,
+  //       comment: values?.comment,
+  //       categoryName: values?.categoryName,
+  //     })
+  //     .then(function (res) {
+  //       console.log(res);
+  //       return res;
+  //     })
+  //     .catch(function (error) {
+  //       console.log("err : ", error);
+  //     });
+  // }
 
   return (
     <FormikProvider value={formik}>
@@ -74,7 +91,7 @@ export default function AddContentForm() {
         autoComplete="off"
         noValidate
         onSubmit={() => {
-          handleSubmit(onSubmit());
+          handleSubmit();
         }}
       >
         <Stack spacing={3}>
@@ -104,6 +121,10 @@ export default function AddContentForm() {
               type="text"
               label="categoryName"
               {...getFieldProps("categoryName")}
+              // onChange={(e) => {
+              //   setCategory(e.target.value);
+              // }}
+              value={category}
               error={Boolean(touched.categoryName && errors.categoryName)}
               helperText={touched.categoryName && errors.categoryName}
             />
@@ -111,6 +132,7 @@ export default function AddContentForm() {
               formik={formik}
               isOpenFilter={openFilter}
               onOpenFilter={handleOpenFilter}
+              setCategory={setCategory}
               onCloseFilter={handleCloseFilter}
             />
           </Stack>

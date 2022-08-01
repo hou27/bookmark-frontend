@@ -68,6 +68,7 @@ CategorySideBar.propTypes = {
   isOpenFilter: PropTypes.bool,
   onOpenFilter: PropTypes.func,
   onCloseFilter: PropTypes.func,
+  setCategory: PropTypes.func,
   formik: PropTypes.object,
 };
 
@@ -75,9 +76,12 @@ export default function CategorySideBar({
   isOpenFilter,
   onOpenFilter,
   onCloseFilter,
+  setCategory,
   formik,
 }) {
-  const { values, getFieldProps, handleChange } = formik;
+  const setCategoryValue = (value) => {
+    setCategory(value);
+  };
 
   return (
     <>
@@ -121,9 +125,15 @@ export default function CategorySideBar({
                 <Typography variant="subtitle1" gutterBottom>
                   Category
                 </Typography>
-                <RadioGroup {...getFieldProps("category")}>
+                <RadioGroup
+
+                // {...getFieldProps("category")}
+                >
                   {FILTER_CATEGORY_OPTIONS.map((item) => (
                     <FormControlLabel
+                      onChange={(e) => {
+                        setCategoryValue(e.target?.value);
+                      }}
                       key={item}
                       value={item}
                       control={<Radio />}
