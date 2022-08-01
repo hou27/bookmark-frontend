@@ -16,6 +16,7 @@ import {
   IconButton,
   InputAdornment,
   FormControlLabel,
+  Alert,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
@@ -25,7 +26,7 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../../localKey";
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
@@ -40,6 +41,7 @@ export default function LoginForm() {
       email: "",
       password: "",
       remember: true,
+      serverError: "",
     },
     validationSchema: LoginSchema,
     onSubmit: async (values) => {
@@ -51,18 +53,22 @@ export default function LoginForm() {
         })
         .then(function (res) {
           console.log(res);
-          const { access_token, refresh_token } = res.data;
-          localStorage.setItem(ACCESS_TOKEN, access_token);
-          localStorage.setItem(REFRESH_TOKEN, refresh_token);
-          instance.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${access_token}`;
+          if (res.data.ok) {
+            const { access_token, refresh_token } = res.data;
+            localStorage.setItem(ACCESS_TOKEN, access_token);
+            localStorage.setItem(REFRESH_TOKEN, refresh_token);
+            instance.defaults.headers.common[
+              "Authorization"
+            ] = `Bearer ${access_token}`;
+            window.location.href = `${window.location.origin}/dashboard`;
+          } else {
+            errors.serverError = res.data.error;
+          }
         })
         .catch(function (error) {
           console.log("err : ", error);
         });
       // navigate("/dashboard", { replace: true });
-      window.location.href = `http://${window.location.host}/dashboard`;
     },
   });
 
@@ -84,6 +90,9 @@ export default function LoginForm() {
         }}
       >
         <Stack spacing={3}>
+          {errors.serverError ? (
+            <Alert severity="error">{errors.serverError}</Alert>
+          ) : null}
           <TextField
             fullWidth
             autoComplete="useremail"
