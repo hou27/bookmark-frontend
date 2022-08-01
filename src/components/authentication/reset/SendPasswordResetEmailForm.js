@@ -25,29 +25,24 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../../localKey";
 
 // ----------------------------------------------------------------------
 
-export default function ResetPasswordForm({ code }) {
+export default function SendPasswordResetEmailForm() {
   const [showPassword, setShowPassword] = useState(false);
 
-  const ResetPasswordSchema = Yup.object().shape({
-    password: Yup.string().required("Password is required"),
-    confirmPassword: Yup.string()
-      .required("Please type your password one more time.")
-      .oneOf([Yup.ref("password")], "Passwords does not match"),
+  const SendPasswordResetEmailSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Email must be a valid email address")
+      .required("Email is required"),
   });
 
   const formik = useFormik({
     initialValues: {
-      password: "",
-      confirmPassword: "",
+      email: "",
     },
-    validationSchema: ResetPasswordSchema,
+    validationSchema: SendPasswordResetEmailSchema,
     onSubmit: async (values) => {
-      const { password } = values;
+      const { email } = values;
       await instance
-        .post("/api/users/reset-password", {
-          password,
-          code,
-        })
+        .get(`/api/users/reset-password${email}`)
         .then(function (res) {
           console.log(res);
           if (res.data.ok) {
@@ -61,8 +56,7 @@ export default function ResetPasswordForm({ code }) {
     },
   });
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
-    formik;
+  const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
 
   return (
     <FormikProvider value={formik}>
@@ -77,33 +71,11 @@ export default function ResetPasswordForm({ code }) {
         <Stack spacing={3}>
           <TextField
             fullWidth
-            autoComplete="current-password"
-            type={showPassword ? "text" : "password"}
-            label="Password"
-            {...getFieldProps("password")}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    edge="end"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                  >
-                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            error={Boolean(touched.password && errors.password)}
-            helperText={touched.password && errors.password}
-          />
-          <TextField
-            fullWidth
-            autoComplete="current-password"
-            type={showPassword ? "text" : "password"}
-            label="ConfirmPassword"
-            {...getFieldProps("confirmPassword")}
-            error={Boolean(touched.confirmPassword && errors.confirmPassword)}
-            helperText={touched.confirmPassword && errors.confirmPassword}
+            type="text"
+            label="Email"
+            {...getFieldProps("email")}
+            error={Boolean(touched.email && errors.email)}
+            helperText={touched.email && errors.email}
           />
           <LoadingButton
             fullWidth
@@ -112,7 +84,7 @@ export default function ResetPasswordForm({ code }) {
             variant="contained"
             loading={isSubmitting}
           >
-            Reset
+            Send Password Reset Email
           </LoadingButton>
         </Stack>
       </Form>

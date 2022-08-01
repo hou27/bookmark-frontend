@@ -8,7 +8,10 @@ import AuthLayout from "../layouts/AuthLayout";
 // components
 import Page from "../components/Page";
 import { MHidden } from "../components/@material-extend";
-import ResetPasswordForm from "../components/authentication/reset/ResetPasswordForm";
+import {
+  ResetPasswordForm,
+  SendPasswordResetEmailForm,
+} from "../components/authentication/reset";
 
 // ----------------------------------------------------------------------
 
@@ -40,6 +43,11 @@ const ContentStyle = styled("div")(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ResetPassword() {
+  const pathname = window.location.pathname.split("/").at(-2);
+  let code = "";
+  if (pathname === "reset") {
+    code = window.location.pathname.split("/").at(-1);
+  }
   return (
     <RootStyle title="Reset Password">
       <MHidden width="mdDown">
@@ -58,11 +66,16 @@ export default function ResetPassword() {
               Reset Your Password
             </Typography>
             <Typography sx={{ color: "text.secondary" }}>
-              Enter your new password below.
+              Enter your {pathname === "reset" ? "new password" : "email"}{" "}
+              below.
             </Typography>
           </Stack>
 
-          <ResetPasswordForm />
+          {pathname === "reset" ? (
+            <ResetPasswordForm code />
+          ) : (
+            <SendPasswordResetEmailForm />
+          )}
         </ContentStyle>
       </Container>
     </RootStyle>

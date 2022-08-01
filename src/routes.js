@@ -42,6 +42,7 @@ export default function Router() {
       children: [
         { path: "login", element: <Login /> },
         { path: "register", element: <Register /> },
+        { path: "send-password-reset-email", element: <ResetPassword /> },
         { path: "reset/:code", element: <ResetPassword /> },
         { path: "404", element: <NotFound /> },
         { path: "/", element: <Navigate to="/dashboard" /> },
