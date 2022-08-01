@@ -1,15 +1,12 @@
 import PropTypes from "prop-types";
-import { Link as RouterLink } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import starOutline from "@iconify/icons-eva/star-outline";
 // material
 import {
   Box,
   Card,
-  Link,
   Typography,
   Stack,
-  Popover,
   TextField,
   Dialog,
   DialogTitle,
@@ -184,7 +181,10 @@ export default function ContentCard({ content, index }) {
 
   return (
     <Card>
-      <Box sx={{ pt: "100%", position: "relative" }}>
+      <Box
+        onClick={() => window.open(link, "_blank")}
+        sx={{ pt: "100%", position: "relative" }}
+      >
         <Label
           variant="filled"
           color={"info"}
@@ -203,17 +203,9 @@ export default function ContentCard({ content, index }) {
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <HistoryDiv>
-          {/* <Link
-            to={{ pathname: link }}
-            color="inherit"
-            underline="hover"
-            target="_blank"
-            component={null}
-          > */}
           <Typography variant="subtitle2" noWrap>
             {title ? title : "Untitled"}
           </Typography>
-          {/* </Link> */}
           <div>
             <MenuIcon
               icon="carbon:overflow-menu-vertical"
