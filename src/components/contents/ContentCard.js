@@ -198,7 +198,10 @@ export default function ContentCard({ content, index }) {
         >
           {categoryName}
         </Label>
-        <ProductImgStyle alt={title} src={coverImg} />
+        <ProductImgStyle
+          alt={title}
+          src={coverImg ? coverImg : "/static/mock-images/covers/cover_16.jpg"}
+        />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
