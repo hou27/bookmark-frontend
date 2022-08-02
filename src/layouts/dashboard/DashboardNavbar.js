@@ -90,7 +90,7 @@ export default function DashboardNavbar({ onOpenSidebar }) {
           alignItems="center"
           spacing={{ xs: 0.5, sm: 1.5 }}
         >
-          {accountInfo?.verified ? (
+          {!accountInfo?.verified ? (
             <Alert severity="info">"Should verify your EMAIL"</Alert>
           ) : null}
           <LanguagePopover />
