@@ -21,30 +21,12 @@ import MenuPopover from "../../components/MenuPopover";
 import account from "../../_mocks_/account";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../localKey";
 import { instance } from "../../lib/interceptors";
+import lockFill from "@iconify/icons-eva/lock-fill";
+import personAddFill from "@iconify/icons-eva/person-add-fill";
 
 // ----------------------------------------------------------------------
 
-const MENU_OPTIONS = [
-  {
-    label: "Home",
-    icon: homeFill,
-    linkTo: "/",
-  },
-  {
-    label: "Profile",
-    icon: personFill,
-    linkTo: "#",
-  },
-  {
-    label: "Settings",
-    icon: settings2Fill,
-    linkTo: "#",
-  },
-];
-
-// ----------------------------------------------------------------------
-
-export default function AccountPopover({ accountInfo }) {
+export default function AccountPopover({ loggedIn, accountInfo }) {
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
@@ -70,6 +52,38 @@ export default function AccountPopover({ accountInfo }) {
         console.log("err : ", error);
       });
   }
+
+  console.log(loggedIn);
+  const MENU_OPTIONS = loggedIn
+    ? [
+        {
+          label: "Home",
+          icon: homeFill,
+          linkTo: "/",
+        },
+        {
+          label: "Profile",
+          icon: personFill,
+          linkTo: "#",
+        },
+        {
+          label: "Settings",
+          icon: settings2Fill,
+          linkTo: "#",
+        },
+      ]
+    : [
+        {
+          label: "login",
+          linkTo: "/login",
+          icon: lockFill,
+        },
+        {
+          label: "register",
+          linkTo: "/register",
+          icon: personAddFill,
+        },
+      ];
 
   return (
     <>
@@ -135,11 +149,18 @@ export default function AccountPopover({ accountInfo }) {
           </MenuItem>
         ))}
 
-        <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth onClick={logout} color="inherit" variant="outlined">
-            Logout
-          </Button>
-        </Box>
+        {loggedIn ? (
+          <Box sx={{ p: 2, pt: 1.5 }}>
+            <Button
+              fullWidth
+              onClick={logout}
+              color="inherit"
+              variant="outlined"
+            >
+              Logout
+            </Button>
+          </Box>
+        ) : null}
       </MenuPopover>
     </>
   );

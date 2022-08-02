@@ -91,12 +91,17 @@ export default function DashboardNavbar({ onOpenSidebar }) {
           spacing={{ xs: 0.5, sm: 1.5 }}
         >
           <LanguagePopover />
-          {loggedIn ? (
-            <>
-              <NotificationsPopover />
-              <AccountPopover accountInfo={accountInfo} />
-            </>
-          ) : null}
+          <>
+            {loggedIn ? <NotificationsPopover /> : null}
+            <AccountPopover
+              loggedIn={loggedIn}
+              accountInfo={
+                loggedIn
+                  ? accountInfo
+                  : { name: "Guest", email: "Should Log In" }
+              }
+            />
+          </>
         </Stack>
       </ToolbarStyle>
     </RootStyle>
