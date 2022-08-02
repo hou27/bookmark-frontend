@@ -8,14 +8,11 @@ import { Link as RouterLink } from "react-router-dom";
 import { Container, Button, Stack, Typography } from "@mui/material";
 // components
 import Page from "../components/Page";
-import {
-  ProductSort,
-  ProductCartWidget,
-} from "../components/_dashboard/products";
 //
 // import HISTORYS from "../_mocks_/products";
 import { instance } from "../lib/interceptors";
 import ContentList from "../components/contents/ContentList";
+import ContentSort from "../components/contents/ContentSort";
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +35,7 @@ export default function Contents() {
   }, []);
 
   return (
-    <Page title="Dashboard: History">
+    <Page title="Dashboard: Content">
       <Container>
         <Stack
           direction="row"
@@ -67,7 +64,7 @@ export default function Contents() {
           sx={{ mb: 5 }}
         >
           <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-            <ProductSort />
+            <ContentSort />
           </Stack>
         </Stack>
 
