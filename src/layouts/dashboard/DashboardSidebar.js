@@ -78,7 +78,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         console.log(error);
       }
     }
-    console.log("running");
+    console.log("running 1");
     fetchAccountInfo();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
