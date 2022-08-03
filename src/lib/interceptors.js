@@ -40,24 +40,26 @@ instance.interceptors.response.use(
                 refresh_token: preRefreshToken,
               })
               .then(async (res) => {
-                const { access_token, refresh_token } = res.data;
-                // 새로 받은 token들 저장
-                // setCookie(ACCESS_TOKEN, access_token, {
-                //   path: "/",
-                // });
-                // setCookie(REFRESH_TOKEN, refresh_token, {
-                //   path: "/",
-                //   secure: true,
-                //   httpOnly: true,
-                // });
-                localStorage.setItem(ACCESS_TOKEN, access_token);
-                localStorage.setItem(REFRESH_TOKEN, refresh_token);
+                if (res.data.ok) {
+                  const { access_token, refresh_token } = res.data;
+                  // 새로 받은 token들 저장
+                  // setCookie(ACCESS_TOKEN, access_token, {
+                  //   path: "/",
+                  // });
+                  // setCookie(REFRESH_TOKEN, refresh_token, {
+                  //   path: "/",
+                  //   secure: true,
+                  //   httpOnly: true,
+                  // });
+                  localStorage.setItem(ACCESS_TOKEN, access_token);
+                  localStorage.setItem(REFRESH_TOKEN, refresh_token);
 
-                // header 새로운 token으로 재설정
-                prevRequest.headers.Authorization = `Bearer ${access_token}`;
+                  // header 새로운 token으로 재설정
+                  prevRequest.headers.Authorization = `Bearer ${access_token}`;
 
-                // 실패했던 기존 request 재시도
-                return await instance(prevRequest);
+                  // 실패했던 기존 request 재시도
+                  return await instance(prevRequest);
+                }
               })
               .catch((e) => {
                 /*
