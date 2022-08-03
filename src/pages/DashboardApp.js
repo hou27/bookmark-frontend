@@ -31,7 +31,6 @@ export default function DashboardApp() {
       await instance
         .get("api/users/load-categories")
         .then(function (res) {
-          console.log(res.data);
           if (res.data.ok) {
             setcategory(res.data.categories);
             console.log(category.length);

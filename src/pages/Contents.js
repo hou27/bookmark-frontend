@@ -23,8 +23,12 @@ export default function Contents() {
       await instance
         .get("/api/users/load-contents")
         .then((res) => {
-          console.log(res.data);
-          setList(res.data.contents);
+          if (res.data.ok) {
+            const sortedList = res.data.contents.sort((a, b) =>
+              a.updatedAt > b.updatedAt ? -1 : 1
+            );
+            setList(sortedList);
+          }
         })
         .catch((err) => {
           console.log(err);
