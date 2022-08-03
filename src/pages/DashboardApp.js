@@ -55,7 +55,7 @@ export default function DashboardApp() {
         <Grid container spacing={3} marginLeft={1}>
           {category.length > 0
             ? category.map((category, _) => {
-                return <CategoryBox category={category} />;
+                return <CategoryBox key={category.id} category={category} />;
               })
             : "No Items"}
         </Grid>

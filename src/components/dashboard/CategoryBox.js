@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // material
 import { Box, Grid, Typography, Stack, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Icon } from "@iconify/react";
-import starOutline from "@iconify/icons-eva/star-outline";
+import ContentPaper from "./ContentPaper";
+import { instance } from "../../lib/interceptors";
 
 const Img = styled("img")({
   margin: "auto",
@@ -13,48 +13,41 @@ const Img = styled("img")({
 });
 
 export default function CategoryBox({ category }) {
-  console.log(category);
+  const [contents, setContents] = useState([]);
+
+  useEffect(() => {
+    async function fetchContentsInfo() {
+      await instance
+        .get("api/users/load-contents", {
+          params: { categoryId: category?.id },
+        })
+        .then(function (res) {
+          console.log(res.data);
+          if (res.data.ok) {
+            setContents(res.data.contents);
+            console.log(contents);
+          }
+        })
+        .catch(function (error) {
+          console.log("err : ", error);
+        });
+    }
+    console.log("load Content info");
+
+    fetchContentsInfo();
+  }, [setContents]);
+
   return (
     <Box component="span" marginLeft={1}>
       <Stack spacing={3}>
-        <Typography variant="h4">{category.name}</Typography>
-        <Paper
-          sx={{
-            p: 2,
-            margin: "auto",
-            width: 300,
-            flexGrow: 1,
-            backgroundColor: (theme) =>
-              theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-          }}
-        >
-          <Grid container spacing={2}>
-            <Box sx={{ width: 100, height: 64 }}>
-              <Img
-                alt="complex"
-                src="/static/mock-images/covers/cover_16.jpg"
-              />
-            </Box>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid xs marginX={2} marginY={1}>
-                <Typography gutterBottom variant="subtitle1" component="div">
-                  Title
-                </Typography>
-
-                <Typography variant="body2" gutterBottom>
-                  comment
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid>
-              <Box
-                component={Icon}
-                icon={starOutline}
-                sx={{ width: 16, height: 16, mr: 0.5 }}
-              />
-            </Grid>
-          </Grid>
-        </Paper>
+        <Typography variant="h4">
+          {category ? category.name : "Loading"}
+        </Typography>
+        {contents &&
+          contents.length > 0 &&
+          contents.map((content, _) => {
+            return <ContentPaper key={content.id} content={content} />;
+          })}
       </Stack>
     </Box>
   );
