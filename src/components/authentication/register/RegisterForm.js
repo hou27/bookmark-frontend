@@ -41,37 +41,36 @@ export default function RegisterForm() {
       confirmPassword: "",
     },
     validationSchema: RegisterSchema,
-    onSubmit: () => {
-      navigate("/login", { replace: true });
+    onSubmit: async (values) => {
+      const { name, email, password } = values;
+      await instance
+        .post("api/auth/register", {
+          email,
+          name,
+          password,
+        })
+        .then(function (res) {
+          console.log(res);
+          navigate("/login", { replace: true });
+          return res;
+        })
+        .catch(function (error) {
+          console.log("err : ", error);
+        });
     },
   });
 
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
     formik;
 
-  async function onSubmit() {
-    await instance
-      .post("api/auth/register", {
-        email: values.email,
-        name: values.name,
-        password: values.password,
-      })
-      .then(function (res) {
-        console.log(res);
-        return res;
-      })
-      .catch(function (error) {
-        console.log("err : ", error);
-      });
-  }
-
   return (
     <FormikProvider value={formik}>
       <Form
         autoComplete="off"
         noValidate
-        onSubmit={() => {
-          handleSubmit(onSubmit());
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
         }}
       >
         <Stack spacing={3}>
