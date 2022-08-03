@@ -49,6 +49,8 @@ export default function ContentPaper({ content }) {
               component="h3"
               noWrap={true}
               maxWidth={150}
+              sx={{ cursor: "pointer" }}
+              onClick={() => window.open(content.link, "_blank")}
             >
               {content.title}
             </Typography>
