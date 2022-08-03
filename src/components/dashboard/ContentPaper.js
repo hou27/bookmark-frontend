@@ -13,7 +13,6 @@ const Img = styled("img")({
 });
 
 export default function ContentPaper({ content }) {
-  console.log(content);
   return (
     <>
       <Paper
@@ -28,18 +27,40 @@ export default function ContentPaper({ content }) {
       >
         <Grid container spacing={2}>
           <Box sx={{ width: 100, height: 64 }}>
-            <Img alt="complex" src="/static/mock-images/covers/cover_16.jpg" />
+            <Img
+              alt="complex"
+              src={
+                content?.coverImg
+                  ? content.coverImg
+                  : "/static/mock-images/covers/cover_16.jpg"
+              }
+            />
           </Box>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid xs marginX={2} marginY={1}>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Title
-              </Typography>
+          <Grid
+            direction="column"
+            spacing={2}
+            marginX={1}
+            marginY={1}
+            width={160}
+          >
+            <Typography
+              gutterBottom
+              variant="subtitle1"
+              component="h3"
+              noWrap={true}
+              maxWidth={150}
+            >
+              {content.title}
+            </Typography>
 
-              <Typography variant="body2" gutterBottom>
-                comment
-              </Typography>
-            </Grid>
+            <Typography
+              variant="body2"
+              gutterBottom
+              noWrap={true}
+              maxWidth={150}
+            >
+              {content.comment}
+            </Typography>
           </Grid>
           <Grid>
             <Box
