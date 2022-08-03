@@ -93,7 +93,7 @@ export default function DashboardNavbar({ onOpenSidebar }) {
           {accountInfo && !accountInfo?.verified ? (
             <Alert severity="info">"Should verify your EMAIL"</Alert>
           ) : null}
-          <LanguagePopover />
+          {/* <LanguagePopover /> */}
           <>
             {loggedIn ? <NotificationsPopover /> : null}
             <AccountPopover
