@@ -25,8 +25,8 @@ export default function Router() {
       path: "/dashboard",
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/dashboard" replace /> },
-        { path: "", element: <DashboardApp /> },
+        // { element: <Navigate to="/dashboard/app" replace /> },
+        { path: "app", element: <DashboardApp /> },
         { path: "user", element: <User /> },
         { path: "products", element: <Products /> },
         { path: "contents", element: <Contents /> },
@@ -34,6 +34,7 @@ export default function Router() {
         { path: "detail/:id", element: <BookDetail /> },
         { path: "edit", element: <EditorPage /> },
         { path: "add", element: <AddContent /> },
+        { path: "", element: <Navigate to="/dashboard/app" /> },
       ],
     },
     {
@@ -45,7 +46,7 @@ export default function Router() {
         { path: "send-password-reset-email", element: <ResetPassword /> },
         { path: "reset/:code", element: <ResetPassword /> },
         { path: "404", element: <NotFound /> },
-        { path: "/", element: <Navigate to="/dashboard" /> },
+        { path: "/", element: <Navigate to="/dashboard/app" /> },
         { path: "*", element: <Navigate to="/404" /> },
       ],
     },
