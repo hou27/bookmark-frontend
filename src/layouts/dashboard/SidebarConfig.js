@@ -28,11 +28,11 @@ const sidebarConfig = [
   //   path: "/dashboard/products",
   //   icon: getIcon(shoppingBagFill),
   // },
-  {
-    title: "content",
-    path: "/dashboard/contents",
-    icon: getIcon(shoppingBagFill),
-  },
+  // {
+  //   title: "content",
+  //   path: "/dashboard/contents",
+  //   icon: getIcon(shoppingBagFill),
+  // },
   // {
   //   title: "blog",
   //   path: "/dashboard/blog",
