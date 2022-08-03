@@ -20,6 +20,7 @@ import {
 import { styled } from "@mui/material/styles";
 import { instance } from "../lib/interceptors";
 import CategoryBox from "../components/dashboard/CategoryBox";
+import ContentListByCategoy from "../components/dashboard/ContentListByCategoy";
 
 // ----------------------------------------------------------------------
 
@@ -31,7 +32,6 @@ export default function DashboardApp() {
       await instance
         .get("api/users/load-categories")
         .then(function (res) {
-          console.log(res.data);
           if (res.data.ok) {
             setcategory(res.data.categories);
             console.log(category.length);
@@ -52,13 +52,7 @@ export default function DashboardApp() {
         <Box sx={{ pb: 5 }}>
           <Typography variant="h4">Hi, Welcome back</Typography>
         </Box>
-        <Grid container spacing={3} marginLeft={3}>
-          {category.length > 0
-            ? category.map((category, _) => {
-                return <CategoryBox key={category.id} category={category} />;
-              })
-            : "No Items"}
-        </Grid>
+        <ContentListByCategoy />
         {/* <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
             <AppWeeklySales />

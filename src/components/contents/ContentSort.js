@@ -13,7 +13,7 @@ const SORT_BY_OPTIONS = [
   { value: "newest", label: "Newest" },
 ];
 
-export default function ContentSort() {
+export default function ContentSort({ sortBy, setSortBy }) {
   const [open, setOpen] = useState(null);
 
   const handleOpen = (event) => {
@@ -23,6 +23,7 @@ export default function ContentSort() {
   const handleClose = () => {
     setOpen(null);
   };
+  console.log("sortBy : ", sortBy);
 
   return (
     <>
@@ -38,7 +39,7 @@ export default function ContentSort() {
           variant="subtitle2"
           sx={{ color: "text.secondary" }}
         >
-          Newest
+          {sortBy}
         </Typography>
       </Button>
       <Menu
@@ -52,8 +53,11 @@ export default function ContentSort() {
         {SORT_BY_OPTIONS.map((option) => (
           <MenuItem
             key={option.value}
-            selected={option.value === "newest"}
-            onClick={handleClose}
+            selected={sortBy === option.value}
+            onClick={() => {
+              handleClose();
+              setSortBy(option.value);
+            }}
             sx={{ typography: "body2" }}
           >
             {option.label}

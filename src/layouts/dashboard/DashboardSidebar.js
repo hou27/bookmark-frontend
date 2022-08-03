@@ -123,7 +123,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
 
       <NavSection
         navConfig={
-          loggedIn ? sidebarConfig.slice(0, 2) : sidebarConfig.slice(-2)
+          loggedIn ? sidebarConfig.slice(0, 1) : sidebarConfig.slice(-2)
         }
       />
 

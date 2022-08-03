@@ -11,10 +11,11 @@ import Page from "../components/Page";
 import { instance } from "../lib/interceptors";
 import ContentList from "../components/contents/ContentList";
 import ContentSort from "../components/contents/ContentSort";
+import ContentListByCategoy from "../components/dashboard/ContentListByCategoy";
 
 // ----------------------------------------------------------------------
 
-export default function Contents() {
+export default function Dashboard() {
   const [list, setList] = useState([]);
   const [sortBy, setSortBy] = useState("newest");
 
@@ -38,7 +39,7 @@ export default function Contents() {
   }, []);
 
   return (
-    <Page title="Dashboard: Content">
+    <Page title="Dashboard">
       <Container>
         <Stack
           direction="row"
@@ -47,7 +48,7 @@ export default function Contents() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Content List
+            Know Zip
           </Typography>
           <Button
             variant="contained"
@@ -71,7 +72,11 @@ export default function Contents() {
           </Stack>
         </Stack>
 
-        <ContentList contents={list} />
+        {sortBy === "newest" ? (
+          <ContentList contents={list} />
+        ) : (
+          <ContentListByCategoy />
+        )}
       </Container>
     </Page>
   );
