@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
+// ----------------------------------------------------------------------
+import { useNavigate } from "react-router-dom";
 // material
-import { Box, Grid, Typography, Stack, Paper } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Box, Typography, Stack } from "@mui/material";
 import ContentPaper from "./ContentPaper";
 import { instance } from "../../lib/interceptors";
 
-const Img = styled("img")({
-  margin: "auto",
-  display: "block",
-  maxWidth: "100%",
-  maxHeight: "100%",
-});
-
 export default function CategoryBox({ category }) {
+  const navigate = useNavigate();
   const [contents, setContents] = useState([]);
+
+  const handleClickCategory = () => {
+    navigate(`/dashboard/contents/${category.id}`);
+  };
 
   useEffect(() => {
     async function fetchContentsInfo() {
@@ -40,7 +39,13 @@ export default function CategoryBox({ category }) {
   return (
     <Box component="span" marginLeft={1}>
       <Stack spacing={3}>
-        <Typography variant="h4">
+        <Typography
+          onClick={() => {
+            handleClickCategory();
+          }}
+          sx={{ cursor: "pointer" }}
+          variant="h4"
+        >
           {category ? category.name : "Loading"}
         </Typography>
         <Stack spacing={0}>

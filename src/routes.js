@@ -30,7 +30,7 @@ export default function Router() {
         { path: "app", element: <Dashboard /> },
         { path: "user", element: <User /> },
         { path: "products", element: <Products /> },
-        { path: "contents", element: <Contents /> },
+        { path: "contents/:id", element: <Contents /> },
         { path: "blog", element: <Blog /> },
         { path: "detail/:id", element: <BookDetail /> },
         { path: "edit", element: <EditorPage /> },

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 // material
 import { Container, Button, Stack, Typography } from "@mui/material";
 // components
@@ -15,27 +15,31 @@ import ContentSort from "../components/contents/ContentSort";
 // ----------------------------------------------------------------------
 
 export default function Contents() {
-  const [list, setList] = useState([]);
+  const { id: categoryId } = useParams();
   const [sortBy, setSortBy] = useState("newest");
+  const [contents, setContents] = useState([]);
 
   useEffect(() => {
-    async function getMyList() {
+    async function fetchContentsInfo() {
       await instance
-        .get("/api/users/load-contents")
-        .then((res) => {
+        .get("api/users/load-contents", {
+          params: { categoryId: categoryId },
+        })
+        .then(function (res) {
+          console.log(res.data);
           if (res.data.ok) {
-            const sortedList = res.data.contents.sort((a, b) =>
-              a.updatedAt > b.updatedAt ? -1 : 1
-            );
-            setList(sortedList);
+            setContents(res.data.contents);
+            console.log(contents);
           }
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(function (error) {
+          console.log("err : ", error);
         });
     }
-    getMyList();
-  }, []);
+    console.log("load Content info");
+
+    fetchContentsInfo();
+  }, [setContents]);
 
   return (
     <Page title="Dashboard: Content">
@@ -47,7 +51,9 @@ export default function Contents() {
           mb={5}
         >
           <Typography variant="h4" gutterBottom>
-            Content List
+            {contents && contents.length > 0
+              ? contents[0].category.name
+              : "Loading..."}
           </Typography>
           <Button
             variant="contained"
@@ -71,7 +77,7 @@ export default function Contents() {
           </Stack>
         </Stack>
 
-        <ContentList contents={list} />
+        <ContentList contents={contents} />
       </Container>
     </Page>
   );
