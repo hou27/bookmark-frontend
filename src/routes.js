@@ -26,7 +26,7 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { element: <Navigate to="/dashboard/app" replace /> },
-        { path: "", element: <DashboardApp /> },
+        { path: "app", element: <DashboardApp /> },
         { path: "user", element: <User /> },
         { path: "products", element: <Products /> },
         { path: "contents", element: <Contents /> },
@@ -45,7 +45,7 @@ export default function Router() {
         { path: "send-password-reset-email", element: <ResetPassword /> },
         { path: "reset/:code", element: <ResetPassword /> },
         { path: "404", element: <NotFound /> },
-        { path: "/", element: <Navigate to="/dashboard" /> },
+        { path: "/", element: <Navigate to="/dashboard/app" /> },
         { path: "*", element: <Navigate to="/404" /> },
       ],
     },
