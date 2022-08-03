@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
 import { Link as RouterLink } from "react-router-dom";
 // material
-import { Container, Button, Stack, Typography } from "@mui/material";
+import { Container, Button, Stack, Typography, Alert } from "@mui/material";
 // components
 import Page from "../components/Page";
 //
@@ -24,14 +24,19 @@ export default function Dashboard() {
       await instance
         .get("/api/users/load-contents")
         .then((res) => {
+          console.log(res.data);
           if (res.data.ok) {
             const sortedList = res.data.contents.sort((a, b) =>
               a.updatedAt > b.updatedAt ? -1 : 1
             );
             setList(sortedList);
+          } else {
+            setList(["non-login"]);
+            console.log(list);
           }
         })
         .catch((err) => {
+          setList(["non-login"]);
           console.log(err);
         });
     }
@@ -50,32 +55,40 @@ export default function Dashboard() {
           <Typography variant="h4" gutterBottom>
             Know Zip
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to={`/dashboard/add`}
-            startIcon={<Icon icon={plusFill} />}
-          >
-            콘텐츠 추가
-          </Button>
+          {list[0] === "non-login" ? null : (
+            <Button
+              variant="contained"
+              component={RouterLink}
+              to={`/dashboard/add`}
+              startIcon={<Icon icon={plusFill} />}
+            >
+              콘텐츠 추가
+            </Button>
+          )}
         </Stack>
 
-        <Stack
-          direction="row"
-          flexWrap="wrap-reverse"
-          alignItems="center"
-          justifyContent="flex-end"
-          sx={{ mb: 5 }}
-        >
-          <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-            <ContentSort sortBy={sortBy} setSortBy={setSortBy} />
-          </Stack>
-        </Stack>
-
-        {sortBy === "newest" ? (
-          <ContentList contents={list} />
+        {list[0] === "non-login" ? (
+          <Alert severity="info">Please Log In</Alert>
         ) : (
-          <ContentListByCategoy />
+          <>
+            <Stack
+              direction="row"
+              flexWrap="wrap-reverse"
+              alignItems="center"
+              justifyContent="flex-end"
+              sx={{ mb: 5 }}
+            >
+              <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
+                <ContentSort sortBy={sortBy} setSortBy={setSortBy} />
+              </Stack>
+            </Stack>
+
+            {sortBy === "newest" ? (
+              <ContentList contents={list} />
+            ) : (
+              <ContentListByCategoy />
+            )}
+          </>
         )}
       </Container>
     </Page>
