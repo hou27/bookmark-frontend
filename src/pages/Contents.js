@@ -1,6 +1,4 @@
-import React, { useEffect } from "react";
-import { useFormik } from "formik";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
 import { Link as RouterLink } from "react-router-dom";
@@ -17,7 +15,8 @@ import ContentSort from "../components/contents/ContentSort";
 // ----------------------------------------------------------------------
 
 export default function Contents() {
-  const [list, setList] = React.useState([]);
+  const [list, setList] = useState([]);
+  const [sortBy, setSortBy] = useState("newest");
 
   useEffect(() => {
     async function getMyList() {
@@ -64,7 +63,7 @@ export default function Contents() {
           sx={{ mb: 5 }}
         >
           <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-            <ContentSort />
+            <ContentSort sortBy={sortBy} setSortBy={setSortBy} />
           </Stack>
         </Stack>
 
