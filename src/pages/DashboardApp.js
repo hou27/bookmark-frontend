@@ -52,7 +52,7 @@ export default function DashboardApp() {
         <Box sx={{ pb: 5 }}>
           <Typography variant="h4">Hi, Welcome back</Typography>
         </Box>
-        <Grid container spacing={3} marginLeft={1}>
+        <Grid container spacing={3} marginLeft={3}>
           {category.length > 0
             ? category.map((category, _) => {
                 return <CategoryBox key={category.id} category={category} />;

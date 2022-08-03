@@ -18,7 +18,7 @@ export default function ContentPaper({ content }) {
     <>
       <Paper
         sx={{
-          p: 2,
+          p: 1,
           margin: "auto",
           width: 300,
           flexGrow: 1,

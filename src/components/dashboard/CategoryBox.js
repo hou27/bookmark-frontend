@@ -43,11 +43,13 @@ export default function CategoryBox({ category }) {
         <Typography variant="h4">
           {category ? category.name : "Loading"}
         </Typography>
-        {contents &&
-          contents.length > 0 &&
-          contents.map((content, _) => {
-            return <ContentPaper key={content.id} content={content} />;
-          })}
+        <Stack spacing={0}>
+          {contents &&
+            contents.length > 0 &&
+            contents.map((content, _) => {
+              return <ContentPaper key={content.id} content={content} />;
+            })}
+        </Stack>
       </Stack>
     </Box>
   );
