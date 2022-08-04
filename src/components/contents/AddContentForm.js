@@ -12,7 +12,7 @@ import axios from "axios";
 
 // ----------------------------------------------------------------------
 
-export default function AddContentForm() {
+export default function AddContentForm({ link }) {
   const navigate = useNavigate();
   const [openFilter, setOpenFilter] = useState(false);
   const [category, setCategory] = useState("");
@@ -35,7 +35,7 @@ export default function AddContentForm() {
 
   const formik = useFormik({
     initialValues: {
-      link: "",
+      link: link,
       // title: "",
       // description: "",
       comment: "",
@@ -71,24 +71,6 @@ export default function AddContentForm() {
 
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
     formik;
-
-  // async function onSubmit() {
-  //   await instance
-  //     .post("api/contents/add", {
-  //       link: values.link,
-  //       // title: values?.title,
-  //       // description: values?.description,
-  //       comment: values?.comment,
-  //       categoryName: values?.categoryName,
-  //     })
-  //     .then(function (res) {
-  //       console.log(res);
-  //       return res;
-  //     })
-  //     .catch(function (error) {
-  //       console.log("err : ", error);
-  //     });
-  // }
 
   return (
     <FormikProvider value={formik}>
