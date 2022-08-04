@@ -20,6 +20,16 @@ export default function Dashboard() {
   const [sortBy, setSortBy] = useState("newest");
 
   useEffect(() => {
+    function isValidUrl(string) {
+      try {
+        new URL(string);
+      } catch (_) {
+        return false;
+      }
+
+      return true;
+    }
+
     async function getMyList() {
       await instance
         .get("/api/users/load-contents")
@@ -39,6 +49,15 @@ export default function Dashboard() {
           setList(["non-login"]);
           console.log(err);
         });
+
+      setTimeout(async () => {
+        document.getElementById("listen").click();
+        console.log(await window.navigator.clipboard.readText());
+        const recentClipboardValue =
+          await window.navigator.clipboard.readText();
+        if (isValidUrl(recentClipboardValue))
+          alert("최근 클립보드가 url 형식입니다.\n" + recentClipboardValue);
+      }, 2000);
     }
     getMyList();
   }, []);
@@ -52,7 +71,7 @@ export default function Dashboard() {
           justifyContent="space-between"
           mb={5}
         >
-          <Typography variant="h4" gutterBottom>
+          <Typography id="listen" variant="h4" gutterBottom>
             Know Zip
           </Typography>
           {list[0] === "non-login" ? null : (
