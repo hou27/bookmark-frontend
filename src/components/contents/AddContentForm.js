@@ -54,7 +54,7 @@ export default function AddContentForm() {
         })
         .then(function (res) {
           console.log(res);
-          navigate("/dashboard/contents", { replace: true });
+          navigate("/dashboard", { replace: true });
           // window.location.href = `${window.location.origin}/dashboard/contents`;
         })
         .catch(function (error) {
