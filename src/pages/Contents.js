@@ -26,10 +26,8 @@ export default function Contents() {
           params: { categoryId: categoryId },
         })
         .then(function (res) {
-          console.log(res.data);
           if (res.data.ok) {
             setContents(res.data.contents);
-            console.log(contents);
           }
         })
         .catch(function (error) {
@@ -39,7 +37,7 @@ export default function Contents() {
     console.log("load Content info");
 
     fetchContentsInfo();
-  }, [setContents]);
+  }, [setContents, categoryId]);
 
   return (
     <Page title="Dashboard: Content">

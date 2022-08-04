@@ -117,7 +117,7 @@ export default function ContentCard({ content, index }) {
       .delete(`api/contents/delete/${id}`)
       .then(function (res) {
         console.log(res);
-        window.location.href = window.location.href;
+        window.location.reload();
       })
       .catch(function (error) {
         console.log("err : ", error);
@@ -173,7 +173,7 @@ export default function ContentCard({ content, index }) {
           console.log("err : ", error);
         });
       // navigate("/dashboard", { replace: true });
-      window.location.href = window.location.href;
+      window.location.reload();
     },
   });
 

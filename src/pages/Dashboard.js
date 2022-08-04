@@ -36,7 +36,6 @@ export default function Dashboard() {
       await instance
         .get("/api/users/load-contents")
         .then((res) => {
-          console.log(res.data);
           if (res.data.ok) {
             const sortedList = res.data.contents.sort((a, b) =>
               a.updatedAt > b.updatedAt ? -1 : 1
@@ -61,7 +60,6 @@ export default function Dashboard() {
             }, 2000);
           } else {
             setList(["non-login"]);
-            console.log(list);
           }
         })
         .catch((err) => {
@@ -70,7 +68,7 @@ export default function Dashboard() {
         });
     }
     getMyList();
-  }, []);
+  }, [navigate]);
 
   return (
     <Page title="Dashboard">

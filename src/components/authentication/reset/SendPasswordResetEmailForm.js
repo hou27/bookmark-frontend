@@ -1,33 +1,16 @@
 import React from "react";
 import * as Yup from "yup";
-import { useState } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useFormik, Form, FormikProvider } from "formik";
-import { Icon } from "@iconify/react";
-import eyeFill from "@iconify/icons-eva/eye-fill";
-import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
 
 // material
-import {
-  Link,
-  Stack,
-  Checkbox,
-  TextField,
-  IconButton,
-  InputAdornment,
-  FormControlLabel,
-  Alert,
-} from "@mui/material";
+import { Stack, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
 import { instance } from "../../../lib/interceptors";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../../localKey";
 
 // ----------------------------------------------------------------------
 
 export default function SendPasswordResetEmailForm() {
-  const [showPassword, setShowPassword] = useState(false);
-
   const SendPasswordResetEmailSchema = Yup.object().shape({
     email: Yup.string()
       .email("Email must be a valid email address")

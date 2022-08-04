@@ -22,7 +22,6 @@ import account from "../../_mocks_/account";
 
 // ----------------------------------------------------------------------
 import { instance } from "../../lib/interceptors";
-import { LOGGEDIN } from "../../localKey";
 
 // ----------------------------------------------------------------------
 

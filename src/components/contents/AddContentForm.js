@@ -8,7 +8,6 @@ import { LoadingButton } from "@mui/lab";
 
 import { instance } from "../../lib/interceptors";
 import CategorySideBar from "./CategorySideBar";
-import axios from "axios";
 
 // ----------------------------------------------------------------------
 
@@ -67,10 +66,9 @@ export default function AddContentForm({ link }) {
     if (category) {
       formik.setFieldValue("categoryName", category);
     }
-  }, [category]);
+  }, [category, formik]);
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
-    formik;
+  const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
 
   return (
     <FormikProvider value={formik}>

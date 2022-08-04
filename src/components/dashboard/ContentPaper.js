@@ -1,6 +1,6 @@
 import React from "react";
 // material
-import { Box, Grid, Typography, Stack, Paper } from "@mui/material";
+import { Box, Grid, Typography, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Icon } from "@iconify/react";
 import starOutline from "@iconify/icons-eva/star-outline";

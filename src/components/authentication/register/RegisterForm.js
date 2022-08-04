@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 // material
 import { Stack, TextField, IconButton, InputAdornment } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { values } from "lodash";
 
 import { instance } from "../../../lib/interceptors";
 
@@ -60,8 +59,7 @@ export default function RegisterForm() {
     },
   });
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
-    formik;
+  const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
 
   return (
     <FormikProvider value={formik}>

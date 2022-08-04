@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Icon } from "@iconify/react";
-import { Form, FormikProvider } from "formik";
+import { FormikProvider } from "formik";
 import closeFill from "@iconify/icons-eva/close-fill";
-import roundClearAll from "@iconify/icons-ic/round-clear-all";
 import roundFilterList from "@iconify/icons-ic/round-filter-list";
 // material
 import {
-  Box,
   Radio,
   Stack,
   Button,
   Drawer,
-  Rating,
   Divider,
-  Checkbox,
-  FormGroup,
   IconButton,
   Typography,
   RadioGroup,
@@ -23,7 +18,6 @@ import {
 } from "@mui/material";
 //
 import Scrollbar from "../Scrollbar";
-import ColorManyPicker from "../ColorManyPicker";
 import { instance } from "../../lib/interceptors";
 
 // ----------------------------------------------------------------------
@@ -138,7 +132,7 @@ export default function CategorySideBar({
 
           <Divider />
 
-          <Scrollbar>
+          <Scrollbar children={undefined} sx={undefined}>
             <Stack spacing={3} sx={{ p: 3 }}>
               <div>
                 <Typography variant="subtitle1" gutterBottom>
@@ -151,6 +145,7 @@ export default function CategorySideBar({
                   {categoryList.map((item) => (
                     <FormControlLabel
                       onChange={(e) => {
+                        // @ts-ignore
                         setCategoryValue(e.target?.value);
                       }}
                       key={item.id}
