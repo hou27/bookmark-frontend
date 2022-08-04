@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import plusFill from "@iconify/icons-eva/plus-fill";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 // material
 import { Container, Button, Stack, Typography, Alert } from "@mui/material";
 // components
@@ -16,6 +16,8 @@ import ContentListByCategoy from "../components/dashboard/ContentListByCategoy";
 // ----------------------------------------------------------------------
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+
   const [list, setList] = useState([]);
   const [sortBy, setSortBy] = useState("newest");
 
@@ -40,6 +42,23 @@ export default function Dashboard() {
               a.updatedAt > b.updatedAt ? -1 : 1
             );
             setList(sortedList);
+            // check if there is valid url in clipboard
+            setTimeout(async () => {
+              document.getElementById("listen").click();
+              console.log(await window.navigator.clipboard.readText());
+              const recentClipboardValue =
+                await window.navigator.clipboard.readText();
+              if (isValidUrl(recentClipboardValue)) {
+                if (
+                  window.confirm("추가하시겠습니까?\n" + recentClipboardValue)
+                ) {
+                  navigate("/dashboard/add", {
+                    replace: true,
+                    state: { link: recentClipboardValue },
+                  });
+                }
+              }
+            }, 2000);
           } else {
             setList(["non-login"]);
             console.log(list);
@@ -49,15 +68,6 @@ export default function Dashboard() {
           setList(["non-login"]);
           console.log(err);
         });
-
-      setTimeout(async () => {
-        document.getElementById("listen").click();
-        console.log(await window.navigator.clipboard.readText());
-        const recentClipboardValue =
-          await window.navigator.clipboard.readText();
-        if (isValidUrl(recentClipboardValue))
-          alert("최근 클립보드가 url 형식입니다.\n" + recentClipboardValue);
-      }, 2000);
     }
     getMyList();
   }, []);
