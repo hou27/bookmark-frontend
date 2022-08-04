@@ -17,7 +17,6 @@ export default function ContentListByCategoy() {
         .then(function (res) {
           if (res.data.ok) {
             setcategory(res.data.categories);
-            console.log(category.length);
           }
         })
         .catch(function (error) {

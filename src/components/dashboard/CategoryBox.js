@@ -21,10 +21,8 @@ export default function CategoryBox({ category }) {
           params: { categoryId: category?.id },
         })
         .then(function (res) {
-          console.log(res.data);
           if (res.data.ok) {
             setContents(res.data.contents);
-            console.log(contents);
           }
         })
         .catch(function (error) {
@@ -34,7 +32,7 @@ export default function CategoryBox({ category }) {
     console.log("load Content info");
 
     fetchContentsInfo();
-  }, [setContents]);
+  }, [setContents, category]);
 
   return (
     <Box component="span" marginLeft={1}>
