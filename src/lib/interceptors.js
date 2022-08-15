@@ -3,7 +3,8 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "../localKey";
 
 const default_access_token = localStorage.getItem(ACCESS_TOKEN);
 export const instance = axios.create({
-  baseURL: "https://bookmark-test-server-hou27.herokuapp.com/",
+  // baseURL: "https://bookmark-test-server-hou27.herokuapp.com/",
+  baseURL: "http://13.125.189.15:4000/",
   headers: { Authorization: `Bearer ${default_access_token}` },
 });
 
@@ -40,7 +41,7 @@ instance.interceptors.response.use(
                 refreshToken: preRefreshToken,
               })
               .then(async (res) => {
-                if (res.data.ok) {
+                if (res?.data.statusCode === 201) {
                   const { access_token, refresh_token } = res.data;
                   // 새로 받은 token들 저장
                   // setCookie(ACCESS_TOKEN, access_token, {

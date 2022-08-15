@@ -36,7 +36,7 @@ export default function Dashboard() {
       await instance
         .get("/api/users/load-contents")
         .then((res) => {
-          if (res.data.ok) {
+          if (res.data.statusCode === 200) {
             const sortedList = res.data.contents.sort((a, b) =>
               a.updatedAt > b.updatedAt ? -1 : 1
             );

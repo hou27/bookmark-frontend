@@ -39,7 +39,7 @@ export default function ResetPasswordForm({ code }) {
         })
         .then(function (res) {
           console.log(res);
-          if (res.data.ok) {
+          if (res.data.statusCode === 201) {
             window.location.href = `${window.location.origin}/dashboard`;
           }
         })

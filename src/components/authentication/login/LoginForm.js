@@ -52,7 +52,7 @@ export default function LoginForm() {
         })
         .then(function (res) {
           console.log(res);
-          if (res.data.ok) {
+          if (res?.data.statusCode === 201) {
             const { access_token, refresh_token } = res.data;
             localStorage.setItem(ACCESS_TOKEN, access_token);
             localStorage.setItem(REFRESH_TOKEN, refresh_token);

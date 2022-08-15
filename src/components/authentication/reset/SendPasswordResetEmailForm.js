@@ -29,7 +29,7 @@ export default function SendPasswordResetEmailForm() {
         .get(`/api/auth/send-password-reset-email/${encodedEmail}`)
         .then(function (res) {
           console.log(res);
-          if (res.data.ok) {
+          if (res.data.statusCode === 200) {
             window.location.href = `${window.location.origin}/dashboard`;
           }
         })
