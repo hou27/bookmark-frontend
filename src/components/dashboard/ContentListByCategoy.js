@@ -15,7 +15,8 @@ export default function ContentListByCategoy() {
       await instance
         .get("api/users/load-categories")
         .then(function (res) {
-          if (res.data.ok) {
+          console.log(res);
+          if (res.data.statusCode === 200) {
             setcategory(res.data.categories);
           }
         })

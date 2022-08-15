@@ -21,7 +21,7 @@ export default function CategoryBox({ category }) {
           params: { categoryId: category?.id },
         })
         .then(function (res) {
-          if (res.data.ok) {
+          if (res.data.statusCode === 200) {
             setContents(res.data.contents);
           }
         })

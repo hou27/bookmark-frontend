@@ -39,10 +39,12 @@ export default function AccountPopover({ loggedIn, accountInfo }) {
 
   async function logout() {
     await instance
-      .get("api/auth/logout")
+      .post("api/auth/logout", {
+        refresh_token: localStorage.getItem(REFRESH_TOKEN),
+      })
       .then(function (res) {
-        console.log(res.data);
-        if (res.data.ok) {
+        console.log(res?.data);
+        if (res.data.statusCode === 201) {
           localStorage.removeItem(ACCESS_TOKEN);
           localStorage.removeItem(REFRESH_TOKEN);
           window.location.reload();
