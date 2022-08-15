@@ -64,7 +64,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         await instance
           .get("api/users/me")
           .then(function (res) {
-            console.log(res.data);
+            console.log(res?.data);
             res.status === 200 ? setLoggedIn(true) : setLoggedIn(false);
             setAccountInfo(res.data);
             // localStorage.setItem(LOGGEDIN, loggedIn ? "true" : "false");

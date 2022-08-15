@@ -38,7 +38,7 @@ instance.interceptors.response.use(
           async function regenerateToken() {
             return await instance
               .post("api/auth/reissue", {
-                refreshToken: preRefreshToken,
+                refresh_token: preRefreshToken,
               })
               .then(async (res) => {
                 if (res?.data.statusCode === 201) {
