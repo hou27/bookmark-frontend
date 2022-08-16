@@ -23,6 +23,20 @@ export default function AuthSocial() {
         console.log("err : ", error);
       });
   }
+
+  async function googleAuthorize() {
+    await instance
+      .get("/api/oauth/google-auth")
+      .then(function (res) {
+        console.log(res);
+        // if (res.data.statusCode === 200) {
+        //   window.location.href = res.data.url;
+        // }
+      })
+      .catch(function (error) {
+        console.log("err : ", error);
+      });
+  }
   return (
     <>
       <Stack direction="row" spacing={2}>
@@ -45,7 +59,15 @@ export default function AuthSocial() {
           <Icon icon={facebookFill} color="#1877F2" height={24} />
         </Button>
 
-        <Button fullWidth size="large" color="inherit" variant="outlined">
+        <Button
+          onClick={() => {
+            googleAuthorize();
+          }}
+          fullWidth
+          size="large"
+          color="inherit"
+          variant="outlined"
+        >
           <Icon icon={googleFill} color="#1C9CEA" height={24} />
         </Button>
       </Stack>
