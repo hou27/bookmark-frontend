@@ -5,15 +5,31 @@ import facebookFill from "@iconify/icons-eva/facebook-fill";
 // material
 import { Stack, Button, Divider, Typography, Box } from "@mui/material";
 import React from "react";
+import { instance } from "../../lib/interceptors";
 
 // ----------------------------------------------------------------------
 
 export default function AuthSocial() {
+  async function kakaoAuthorize() {
+    await instance
+      .get("/api/oauth/kakao-auth")
+      .then(function (res) {
+        console.log(res);
+        if (res.data.statusCode === 200) {
+          window.location.href = res.data.url;
+        }
+      })
+      .catch(function (error) {
+        console.log("err : ", error);
+      });
+  }
   return (
     <>
       <Stack direction="row" spacing={2}>
         <Button
-          href={`https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI_LOGIN}&response_type=code`}
+          onClick={() => {
+            kakaoAuthorize();
+          }}
           fullWidth
           size="large"
           color="inherit"
@@ -30,7 +46,7 @@ export default function AuthSocial() {
         </Button>
 
         <Button fullWidth size="large" color="inherit" variant="outlined">
-          <Icon icon={twitterFill} color="#1C9CEA" height={24} />
+          <Icon icon={googleFill} color="#1C9CEA" height={24} />
         </Button>
       </Stack>
 
