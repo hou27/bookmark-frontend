@@ -10,6 +10,9 @@ import { instance } from "../../lib/interceptors";
 // ----------------------------------------------------------------------
 
 export default function AuthSocial() {
+  const baseURL = instance.defaults.baseURL;
+  const kakaoAuth = `${baseURL}/api/oauth/kakao-auth`;
+  const googleAuth = `${baseURL}/api/oauth/google-auth`;
   return (
     <>
       <Stack direction="row" spacing={2}>
@@ -17,7 +20,7 @@ export default function AuthSocial() {
           // onClick={() => {
           //   kakaoAuthorize();
           // }}
-          href="http://192.168.219.100:4000/api/oauth/kakao-auth"
+          href={kakaoAuth}
           fullWidth
           size="large"
           color="inherit"
@@ -37,7 +40,7 @@ export default function AuthSocial() {
           // onClick={() => {
           //   googleAuthorize();
           // }}
-          href="http://192.168.219.100:4000/api/oauth/google-auth"
+          href={googleAuth}
           fullWidth
           size="large"
           color="inherit"
