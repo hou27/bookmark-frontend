@@ -4,7 +4,7 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "../localKey";
 const default_access_token = localStorage.getItem(ACCESS_TOKEN);
 export const instance = axios.create({
   // baseURL: "https://bookmark-test-server-hou27.herokuapp.com/",
-  baseURL: "http://api.hou27.shop/",
+  baseURL: "https://api.hou27.shop/",
   // baseURL: "http://192.168.219.100:4000/",
   headers: { Authorization: `Bearer ${default_access_token}` },
 });
