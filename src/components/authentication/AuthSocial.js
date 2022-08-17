@@ -11,8 +11,8 @@ import { instance } from "../../lib/interceptors";
 
 export default function AuthSocial() {
   const baseURL = instance.defaults.baseURL;
-  const kakaoAuth = `${baseURL}/api/oauth/kakao-auth`;
-  const googleAuth = `${baseURL}/api/oauth/google-auth`;
+  const kakaoAuth = `${baseURL}api/oauth/kakao-auth`;
+  const googleAuth = `${baseURL}api/oauth/google-auth`;
   return (
     <>
       <Stack direction="row" spacing={2}>
