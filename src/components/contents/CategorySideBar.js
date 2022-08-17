@@ -84,7 +84,7 @@ export default function CategorySideBar({
       await instance
         .get("/api/users/load-categories")
         .then((res) => {
-          if (res.data.ok) {
+          if (res.data.statusCode === 200) {
             console.log(res.data.categories);
             setCategoryList(res.data.categories);
           }
