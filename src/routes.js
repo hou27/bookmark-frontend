@@ -11,6 +11,8 @@ import AddContent from "./pages/AddContent";
 import Contents from "./pages/Contents";
 import ResetPassword from "./pages/ResetPassword";
 import Dashboard from "./pages/Dashboard";
+import Kakao from "./pages/Kakao";
+import Google from "./pages/Google";
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +35,8 @@ export default function Router() {
       children: [
         { path: "login", element: <Login /> },
         { path: "register", element: <Register /> },
+        { path: "kakao/redirect", element: <Kakao /> },
+        { path: "google/redirect", element: <Google /> },
         { path: "send-password-reset-email", element: <ResetPassword /> },
         { path: "reset/:code", element: <ResetPassword /> },
         { path: "404", element: <NotFound /> },

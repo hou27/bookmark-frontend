@@ -44,9 +44,9 @@ export default function Dashboard() {
             // check if there is valid url in clipboard
             setTimeout(async () => {
               document.getElementById("listen").click();
-              console.log(await window.navigator.clipboard.readText());
+              console.log(await window.navigator.clipboard?.readText());
               const recentClipboardValue =
-                await window.navigator.clipboard.readText();
+                await window.navigator.clipboard?.readText();
               if (isValidUrl(recentClipboardValue)) {
                 if (
                   window.confirm("추가하시겠습니까?\n" + recentClipboardValue)
