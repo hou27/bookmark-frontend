@@ -10,40 +10,14 @@ import { instance } from "../../lib/interceptors";
 // ----------------------------------------------------------------------
 
 export default function AuthSocial() {
-  async function kakaoAuthorize() {
-    await instance
-      .get("/api/oauth/kakao-auth")
-      .then(function (res) {
-        console.log(res);
-        if (res.data.statusCode === 200) {
-          window.location.href = res.data.url;
-        }
-      })
-      .catch(function (error) {
-        console.log("err : ", error);
-      });
-  }
-
-  async function googleAuthorize() {
-    await instance
-      .get("/api/oauth/google-auth")
-      .then(function (res) {
-        console.log(res);
-        // if (res.data.statusCode === 200) {
-        //   window.location.href = res.data.url;
-        // }
-      })
-      .catch(function (error) {
-        console.log("err : ", error);
-      });
-  }
   return (
     <>
       <Stack direction="row" spacing={2}>
         <Button
-          onClick={() => {
-            kakaoAuthorize();
-          }}
+          // onClick={() => {
+          //   kakaoAuthorize();
+          // }}
+          href="http://192.168.219.100:4000/api/oauth/kakao-auth"
           fullWidth
           size="large"
           color="inherit"
@@ -60,9 +34,10 @@ export default function AuthSocial() {
         </Button>
 
         <Button
-          onClick={() => {
-            googleAuthorize();
-          }}
+          // onClick={() => {
+          //   googleAuthorize();
+          // }}
+          href="http://192.168.219.100:4000/api/oauth/google-auth"
           fullWidth
           size="large"
           color="inherit"

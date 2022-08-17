@@ -2,12 +2,22 @@ import React, { useEffect } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 // material
 import { styled } from "@mui/material/styles";
-import { Card, Stack, Link, Container, Typography } from "@mui/material";
+import {
+  Card,
+  Stack,
+  Link,
+  Container,
+  Typography,
+  Button,
+} from "@mui/material";
 // layouts
 import AuthLayout from "../layouts/AuthLayout";
 // components
 import Page from "../components/Page";
 import { MHidden } from "../components/@material-extend";
+// icon
+import googleFill from "@iconify/icons-eva/google-fill";
+import { Icon } from "@iconify/react";
 
 // ----------------------------------------------------------------------
 import { instance } from "../lib/interceptors";
@@ -42,14 +52,12 @@ const ContentStyle = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Kakao() {
+export default function Google() {
   const location = useLocation();
   useEffect(() => {
-    console.log(location);
-
-    async function kakaoLogin() {
+    async function googleLogin() {
       await instance
-        .get(`api/oauth/kakao-login${location.search}`)
+        .get(`api/oauth/google-login${location.search}`)
         .then(function (res) {
           console.log(res);
           if (res?.data.statusCode === 200) {
@@ -67,7 +75,7 @@ export default function Kakao() {
         });
     }
 
-    kakaoLogin();
+    googleLogin();
   }, [location]);
 
   return (
@@ -97,12 +105,12 @@ export default function Kakao() {
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Sign in with Kakao
+              Sign in with Google
             </Typography>
           </Stack>
-          <div className="flex justify-center mb-6">
-            <img alt="..." src="/static/asset/kakao_login_medium_narrow.png" />
-          </div>
+          <Button fullWidth size="large" color="inherit" variant="outlined">
+            <Icon icon={googleFill} color="#1C9CEA" height={24} />
+          </Button>
           <Typography variant="h6" gutterBottom>
             Loading...
           </Typography>
